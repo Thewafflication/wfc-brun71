@@ -1,0 +1,58 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0001}
+\def\TCTitle{Text screen}
+\def\TCPurpose{Verify the text screen of \texttt{SCREEN 0}: the statements
+\texttt{WIDTH}, \texttt{COLOR}, \texttt{LOCATE}, \texttt{VIEW PRINT} and
+\texttt{CLS}, the layout rules of \texttt{PRINT}, the functions
+\texttt{CSRLIN}, \texttt{POS} and \texttt{SCREEN}, and error 5 for arguments
+out of range.}
+\def\TCPriority{\TCPriorityHigh}
+
+\def\TCRequirementRef{REQ-0001}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/screen.hpp};
+\texttt{src/screen.cpp}; \texttt{tests/screen\_test.cpp}.}
+\def\TCTestTechnique{Equivalence partitioning and boundary values of every
+argument (the first and last row, column and colour, one past each), and
+scenario tests of printing, wrapping and scrolling.}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_screen\_test} exists.}
+\def\TCEnvironment{Any supported target; the screen model needs no console.
+CTest runs the program with a 60 second timeout.}
+\def\TCAssumptions{The expected values follow REQ-0001, which follows the PDS
+documentation; they were not taken from BRUN71 itself.}
+
+\def\TCInputData{Text with printable and control characters; rows, columns,
+colours, viewports, widths and clear modes inside and outside their ranges.}
+\def\TCInitialState{A new screen (80 by 25, attribute 7) per scenario.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_screen\_test} (CTest \texttt{TC-0001-screen}, in
+    WFC \texttt{wfc-brun71-TC-0001-screen}).
+  \item Check the defaults of a new screen.
+  \item Check printing: a full line wraps, an item that does not fit starts
+    on the next line, a new line at the bottom of the viewport scrolls it and
+    leaves line 25 alone.
+  \item Check the comma zones, \texttt{TAB}, \texttt{SPC} and the control
+    characters 7, 9, 11, 12, 13 and 28-31.
+  \item Check \texttt{COLOR}, \texttt{LOCATE} (with the cursor shape),
+    \texttt{VIEW PRINT}, \texttt{CLS} and \texttt{WIDTH} with valid values and
+    error 5 for each out-of-range value.
+  \item Check \texttt{SCREEN(row, column [, colorflag])}.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{screen: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

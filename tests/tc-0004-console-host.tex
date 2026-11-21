@@ -1,0 +1,54 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0004}
+\def\TCTitle{Windows console host}
+\def\TCPurpose{Verify that the console host shows the cells of a screen
+(characters through code page 437, attributes without the blink bit) and its
+cursor in a console screen buffer.}
+\def\TCPriority{\TCPriorityHigh}
+
+\def\TCRequirementRef{REQ-0003}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/console.hpp};
+\texttt{src/console.cpp}; \texttt{tests/console\_test.cpp}.}
+\def\TCTestTechnique{Scenario test: draw on a screen, show it, read the
+console buffer back.}
+
+\def\TCPreconditions{The library is built for Windows and the test program
+\texttt{brun71\_console\_test} exists.}
+\def\TCEnvironment{Windows. The process needs a console; without one the
+program exits 77 and CTest reports the test as skipped. The screen buffer is
+never made active, so the console the test runs in is not disturbed. No key
+input is read (it would take keys typed into that console). CTest runs the
+program with a 60 second timeout.}
+\def\TCAssumptions{Not applicable.}
+
+\def\TCInputData{Box-drawing, letter and glyph characters in yellow on blue;
+a blinking colour; the cursor hidden and shown with a full-height shape; a
+40-column screen.}
+\def\TCInitialState{A new screen buffer, not active.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_console\_test} (CTest \texttt{TC-0004-console},
+    in WFC \texttt{wfc-brun71-TC-0004-console}).
+  \item Check the character and attribute shown at the printed cells and at
+    a blank one, and the cursor position and visibility.
+  \item Check that a blinking colour is shown without the blink bit and that
+    the cursor shows with its full-height shape.
+  \item Check a cell in the last column of a 40-column screen.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{console: ok} (or exits 77 without a console); no \texttt{FAIL} line is
+written.}
+\def\TCPostConditions{The screen buffer is closed.}
+
+\TCTemplate
+
+\end{document}

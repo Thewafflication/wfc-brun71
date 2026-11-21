@@ -1,0 +1,59 @@
+# wfc-brun71 Repository Instructions
+
+The BASIC PDS 7.1 text-mode runtime (`BRUN71`) of the WFC libraries: the
+text screen, the keyboard and the console host that QuickBASIC and PDS 7.1
+programs need, and later the PDS 7.1 User Interface Toolbox. This repository
+is a library of [WFC](https://github.com/Thewafflication/wfc) and follows its
+practices; `wsp/` is the pinned Waughtal Software Process submodule (see
+`docs/WSP-ADOPTION.md`).
+
+## Owner Authorization
+
+- Ordinary file edits within this repository and the current task scope do not
+  require asking the owner for approval each time.
+- Running the local lint, build and test tooling is pre-authorized: `cmake`,
+  `ctest`, and the scripts under `scripts/`.
+- Commit and push only when the owner asks. Never tag or release on your own;
+  the owner decides.
+- Run only the x64 configure, build and test locally. Do not run local x86
+  builds/tests or ARM64 cross-builds; GitHub Actions validates those targets.
+- Destructive actions and actions outside this repository need the owner's
+  normal explicit authorization.
+
+## Commit Gate
+
+- `.pre-commit-config.yaml` runs `scripts/Start-CommitGate.ps1`, then
+  `scripts/Invoke-Lint.ps1`, `scripts/Invoke-Build.ps1` and
+  `scripts/Invoke-Tests.ps1` (WSP-CHECK-0001).
+  Land every change with a plain `git commit`; never skip the hook with
+  `--no-verify` and never run its stages by hand in place of it.
+- The first step opens the always-on-top test progress window
+  (`scripts/Show-TestProgress.ps1`, which follows `out/test-progress.log`);
+  do not suppress or replace it. Only one commit gate may run at a time on the
+  machine (`wfc-commit-gate.lock` in the temp folder, shared with WFC and the
+  other libraries): do not start a second `git commit`, build or `ctest` run
+  while a gate is running, and wait if a commit is refused because of one.
+- Setup: `python -m pip install --requirement requirements-dev.txt`, then
+  `pre-commit install`. The tools are pinned (clang-format 22.1.3, gersemi
+  0.29.2, pre-commit 4.6.2, PSScriptAnalyzer 1.25.0).
+- Lint changes no files. To format: `clang-format -i --style=file <file>` and
+  `python -m gersemi -i <file>`.
+
+## Source Rules
+
+- Style comes from `wsp/style` (80 columns, LF, UTF-8, final newline) and is
+  checked by `wsp/tools/Test-SourceStyle.ps1`; `.clang-format`, `.gersemirc`
+  and `.editorconfig` are copies of the WFC ones.
+- Keep C++ sources ASCII: MSVC reads them in the ANSI code page. Write
+  characters outside ASCII as numbers (`char32_t{0x2554}`), not as literals.
+- Never modify `wsp/`; bump it by pinning a newer release tag.
+- Requirements are `REQ-NNNN` under `requirements/`, test cases `TC-NNNN`
+  (specification `tests/tc-NNNN-*.tex`, CTest name `TC-NNNN-<name>`, or
+  `wfc-brun71-TC-NNNN-<name>` when another project mounts the library
+  (`WFC_BRUN71_TEST_PREFIX`), runner `tests/run-tc-NNNN.ps1`), numbered from
+  0001 in this repository's own namespace; keep identifiers stable and never
+  reuse one (WSP artifact identifiers).
+- Where a rule of the runtime was not checked against BRUN71 itself, say so in
+  `COMPATIBILITY.md`; do not present documentation-derived behaviour as
+  verified.
+- `VERSION` is the library version; a release tag is the owner's decision.

@@ -1,0 +1,50 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0003}
+\def\TCTitle{Code page 437}
+\def\TCPurpose{Verify the mapping of code page 437 to the Unicode characters
+the screen shows, and back.}
+\def\TCPriority{\TCPriorityMedium}
+
+\def\TCRequirementRef{REQ-0003}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/cp437.hpp};
+\texttt{src/cp437.cpp}; \texttt{tests/cp437\_test.cpp}.}
+\def\TCTestTechnique{Exhaustive round trip of codes 1-255; spot checks of
+known characters in each range.}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_cp437\_test} exists.}
+\def\TCEnvironment{Any supported target. CTest runs the program with a 60
+second timeout.}
+\def\TCAssumptions{Not applicable.}
+
+\def\TCInputData{Every code 0-255; control characters; characters outside the
+code page.}
+\def\TCInitialState{None; the functions have no state.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_cp437\_test} (CTest \texttt{TC-0003-cp437}, in
+    WFC \texttt{wfc-brun71-TC-0003-cp437}).
+  \item Check that every code 1-255 shows a different character that maps
+    back to the code, and that code 0 shows a space.
+  \item Check known characters: the smiley (1), the house (127), C cedilla
+    (128), the light shade (176), the double box corner (201), the full block
+    (219), sharp s (225), the no-break space (255).
+  \item Check that control characters map to themselves and that the euro sign
+    and an emoji have no code.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{cp437: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

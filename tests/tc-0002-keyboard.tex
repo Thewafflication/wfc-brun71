@@ -1,0 +1,54 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0002}
+\def\TCTitle{Keyboard and INKEY\$}
+\def\TCPurpose{Verify the strings \texttt{INKEY\$} returns, the BIOS codes of
+the extended keys with Shift, Ctrl and Alt, the translation of Windows key
+presses and the 15-key type-ahead buffer.}
+\def\TCPriority{\TCPriorityHigh}
+
+\def\TCRequirementRef{REQ-0002}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/keyboard.hpp};
+\texttt{src/keyboard.cpp}; \texttt{tests/keyboard\_test.cpp}.}
+\def\TCTestTechnique{Decision table of key and modifier combinations;
+boundary values of the buffer (empty, 15 keys, one more).}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_keyboard\_test} exists.}
+\def\TCEnvironment{Any supported target; the translation is plain code with
+no console. CTest runs the program with a 60 second timeout.}
+\def\TCAssumptions{The expected codes are the PC BIOS keyboard codes.}
+
+\def\TCInputData{Key presses (virtual-key code, character, Shift, Ctrl, Alt)
+for letters, control keys, cursor keys, function keys, AltGr characters and
+modifier keys alone.}
+\def\TCInitialState{An empty key buffer.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_keyboard\_test} (CTest
+    \texttt{TC-0002-keyboard}, in WFC \texttt{wfc-brun71-TC-0002-keyboard}).
+  \item Check the \texttt{INKEY\$} string of a character and of an extended
+    key.
+  \item Check the translation of characters, Ctrl+letter, AltGr, a character
+    outside code page 437 and the modifier keys alone.
+  \item Check the codes of the cursor, editing and function keys alone and
+    with Shift, Ctrl and Alt; Shift+Tab; Alt with letters, digits, minus and
+    equals.
+  \item Check that the buffer keeps 15 keys in order, refuses a 16th and
+    returns the empty string when empty.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{keyboard: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}
