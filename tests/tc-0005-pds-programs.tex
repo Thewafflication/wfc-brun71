@@ -1,0 +1,55 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0005}
+\def\TCTitle{PDS programs in WFC}
+\def\TCPurpose{Verify that WFC runs PDS 7.1 programs on the runtime, in the
+interpreter and as native code: the statements and functions of the text
+screen, PRINT on the screen, INKEY\$ from the standard input, error 5, and
+VB6 modules that use the same words as names.}
+\def\TCPriority{\TCPriorityHigh}
+
+\def\TCRequirementRef{REQ-0004}
+\def\TCDesignRef{WFC \texttt{architecture/adr-0011-pds-text-programs.md}.}
+\def\TCFeatureRef{\texttt{tests/corpus/*.bas}; in WFC
+\texttt{src/interpreter/pds\_screen.cpp},
+\texttt{src/interpreter/pds\_statements.cpp}.}
+\def\TCTestTechnique{Scenario tests: each program prints, after its plain
+output, the text of its final screen, which is compared with the expected
+text.}
+
+\def\TCPreconditions{A \texttt{wfc.exe} built with this library; CMake is
+given \texttt{-DWFC\_EXECUTABLE=<wfc.exe>}. Without it the tests are skipped.
+Inside WFC the programs run as \texttt{TC-MP0002-corpus-NNN-name} and
+\texttt{TC-MP0002-corpus-NNN-name-native}.}
+\def\TCEnvironment{Windows. The standard output is redirected, so the screen
+is kept in memory and its text printed at the end. CTest runs each program
+with a 120 second timeout.}
+\def\TCAssumptions{The expected texts follow REQ-0001 and REQ-0004; they were
+not taken from BRUN71 itself.}
+
+\def\TCInputData{The programs \texttt{300-pds-screen},
+\texttt{301-pds-inkey} (with \texttt{301-pds-inkey.keys} as standard input),
+\texttt{302-pds-errors}, \texttt{303-pds-names} and \texttt{304-pds-scroll}.}
+\def\TCInitialState{None.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run each program with \texttt{wfc --interpret} (CTest
+    \texttt{TC-0005-NNN-name}) and as native code
+    (\texttt{TC-0005-NNN-name-native}).
+  \item Compare the standard output with \texttt{NNN-name.expected}, ignoring
+    the line ending and the blanks around the whole text.
+\end{enumerate}}
+\def\TCExpectedResult{Every program exits with status 0 and prints exactly
+its expected text in both modes.}
+\def\TCPostConditions{\texttt{303-pds-names} deletes the file it writes.}
+
+\TCTemplate
+
+\end{document}

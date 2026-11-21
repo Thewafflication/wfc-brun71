@@ -13,16 +13,16 @@ manuals do not say.
 
 | Item | Status | Notes |
 | --- | --- | --- |
-| `WIDTH columns, rows` | done | 40/80 by 25/43/50; clears, resets the viewport |
-| `COLOR fg, bg, border` | done | `SCREEN 0` ranges: fg 0-31, bg 0-7, border 0-15 |
-| `LOCATE row, col, cursor, start, stop` | done | |
-| `CLS [0 \| 1 \| 2]` | done | |
-| `VIEW PRINT [top TO bottom]` | done | |
-| `PRINT` (layout) | done | the caller formats numbers |
-| `TAB(n)`, `SPC(n)` | done | |
-| `CSRLIN`, `POS(0)` | done | |
-| `SCREEN(row, col [, flag])` | done | |
-| `INKEY$` | done | key codes and buffer; the host fills the buffer |
+| `WIDTH columns, rows` | done, in WFC | 40/80 by 25/43/50; clears, resets the viewport |
+| `COLOR fg, bg, border` | done, in WFC | `SCREEN 0` ranges: fg 0-31, bg 0-7, border 0-15 |
+| `LOCATE row, col, cursor, start, stop` | done, in WFC | |
+| `CLS [0 \| 1 \| 2]` | done, in WFC | |
+| `VIEW PRINT [top TO bottom]` | done, in WFC | |
+| `PRINT` (layout) | done, in WFC | WFC formats the numbers (VB6 rules: a sign place and a trailing space) |
+| `TAB(n)`, `SPC(n)` | done, in WFC | |
+| `CSRLIN`, `POS(0)` | done, in WFC | |
+| `SCREEN(row, col [, flag])` | library only | WFC: the name is the VB6 `Screen` object |
+| `INKEY$` | done, in WFC | from the console, or the standard input when the output is redirected |
 | `PRINT USING`, `WRITE`, number format | planned | M2 |
 | `INPUT`, `LINE INPUT`, `INPUT$` | planned | M2 |
 | `BEEP`, `SOUND`, `PLAY`, `SLEEP` | planned | M2; `CHR$(7)` already calls the host's bell |
@@ -46,6 +46,17 @@ manuals do not say.
 | The cursor is hidden until `LOCATE , , 1`; its default shape is scan lines 6-7 | assumed |
 | `LOCATE , , , start` sets `stop` to `start` | documented |
 | The grey cursor keys give the same codes as the keypad ones | assumed (the BIOS gives `E0h` prefixes; `INKEY$` reports `CHR$(0)`) |
+
+## WFC differences
+
+- `ERROR$(5)` gives Visual Basic's "Invalid procedure call or argument"; the
+  error raised by the screen carries "Illegal function call" as its
+  description.
+- `LOCATE (5), 1` (a first argument in parentheses) is read as an array
+  element, as in Visual Basic, not as the statement.
+- A program that has its own `Sub Locate` (or `Cls`, `Color`, `Width`) keeps
+  calling it in the interpreter; compiled to native code it gets the
+  statement.
 
 ## Host differences
 

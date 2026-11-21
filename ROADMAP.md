@@ -24,18 +24,22 @@ A checked item is present, tested and passing; an unchecked one is planned.
 
 ## M2: PDS programs run in WFC
 
-- [ ] WFC runs a PDS/QuickBASIC program (`.BAS` modules with no forms) as a
+- [x] WFC runs a PDS/QuickBASIC program (`.BAS` modules with no forms) as a
       text-mode program on this runtime, with the interpreter and the native
-      compiler: the statements of M1 reach the library instead of the VB6
-      `Form`/`Screen` objects whose names they share (`Cls`, `Print`,
-      `Width`, `Screen`, `Color`).
+      compiler (WFC ADR-0011): `CLS`, `LOCATE`, `COLOR`, `WIDTH`,
+      `VIEW PRINT`, `INKEY$`, `CSRLIN`, `POS` in standard modules, and
+      `PRINT` on the screen once it has started; live in the console, or
+      the final screen as text when the output is redirected; keys from the
+      console or the standard input (REQ-0004, TC-0005).
+- [ ] `SCREEN(row, col)` (the name is VB6's `Screen` object in WFC);
+      `ERROR$` with the PDS texts.
 - [ ] `PRINT` of numbers in the PDS format (a leading sign place and a
       trailing space), `PRINT USING`, `WRITE`.
 - [ ] `INPUT`, `LINE INPUT` and the line editor they use; `INPUT$`.
 - [ ] `BEEP`, `SOUND`, `PLAY`; `SLEEP`; `KEY ON/OFF/LIST` and the soft-key
       line; `ON KEY(n) GOSUB` and `KEY(n) ON/OFF/STOP`.
-- [ ] Corpus programs in `tests/corpus`, run by WFC as the other libraries'
-      are.
+- [x] Corpus programs in `tests/corpus`, run by WFC in the interpreter and
+      as native code (`TC-MP0002-corpus-30x-*`), and here as `TC-0005`.
 
 ## M3: the User Interface Toolbox
 

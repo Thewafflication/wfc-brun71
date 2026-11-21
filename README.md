@@ -23,9 +23,16 @@ program on a PC text screen, running in a Windows console.
 Target: `wfc_brun71` (static library, `wfcbrun71_static.lib`).
 
 The model draws nothing itself, so the same rules serve the console host, the
-tests and, later, other hosts. WFC does not yet call the library: wiring the
-PDS statements into the WFC evaluator and native compiler is the next
-milestone (see [ROADMAP.md](ROADMAP.md)). After the runtime comes a clone of
+tests and, later, other hosts. WFC runs PDS programs on it, interpreted and
+as native code (WFC ADR-0011):
+
+```
+wfc game.bas              shows the screen live in the console
+wfc game.bas < keys.txt   INKEY$ reads the keys from the file
+wfc game.bas > out.txt    prints the text of the final screen
+```
+
+`tests/corpus` has the PDS programs WFC and this repository's `TC-0005` run. After the runtime comes a clone of
 the PDS 7.1 User Interface Toolbox (text-mode windows, menus, list boxes and
 the mouse) on top of the same screen.
 

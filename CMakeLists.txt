@@ -51,6 +51,8 @@ set(
 add_library(wfc_brun71 STATIC src/screen.cpp src/keyboard.cpp src/cp437.cpp)
 if(WIN32)
   target_sources(wfc_brun71 PRIVATE src/console.cpp)
+  # Users of the library test this before they use console.hpp.
+  target_compile_definitions(wfc_brun71 PUBLIC WFC_BRUN71_HAS_CONSOLE)
 endif()
 set_target_properties(wfc_brun71 PROPERTIES OUTPUT_NAME wfcbrun71_static)
 target_include_directories(
@@ -74,4 +76,56 @@ if(BUILD_TESTING AND WFC_BUILD_TESTS)
   if(WIN32)
     wfc_brun71_test(TC-0004 console tests/console_test.cpp "integration;brun71")
   endif()
+endif()
+
+# TC-0005 runs the PDS corpus programs (tests/corpus) with WFC, whose path is
+# WFC_EXECUTABLE, in the interpreter and as native code; without it the tests
+# are skipped. Inside WFC the same programs run under WFC's own names.
+if(
+  BUILD_TESTING
+  AND WFC_BUILD_TESTS
+  AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR
+)
+  set(
+    WFC_EXECUTABLE
+    ""
+    CACHE FILEPATH
+    "wfc.exe that runs the corpus test case TC-0005 (empty: skipped)"
+  )
+  file(
+    GLOB corpus_expected
+    CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/tests/corpus/*.expected"
+  )
+  foreach(expected_file IN LISTS corpus_expected)
+    get_filename_component(corpus_name "${expected_file}" NAME_WE)
+    set(corpus_base "${CMAKE_CURRENT_SOURCE_DIR}/tests/corpus/${corpus_name}")
+    set(corpus_keys "")
+    if(EXISTS "${corpus_base}.keys")
+      set(corpus_keys "-DKEYS=${corpus_base}.keys")
+    endif()
+    foreach(corpus_mode interpret native)
+      set(test_name TC-0005-${corpus_name})
+      set(native_option "")
+      if(corpus_mode STREQUAL "native")
+        set(test_name ${test_name}-native)
+        set(native_option -DNATIVE=1)
+      endif()
+      add_test(
+        NAME ${test_name}
+        COMMAND
+          "${CMAKE_COMMAND}" "-DWFC=${WFC_EXECUTABLE}"
+          "-DINPUT=${corpus_base}.bas" "-DEXPECTED=${expected_file}"
+          ${corpus_keys} ${native_option} -P
+          "${CMAKE_CURRENT_SOURCE_DIR}/tests/corpus/run_corpus_case.cmake"
+      )
+      set_tests_properties(
+        ${test_name}
+        PROPERTIES
+          LABELS "integration;brun71;corpus"
+          TIMEOUT 120
+          SKIP_REGULAR_EXPRESSION "SKIPPED:"
+      )
+    endforeach()
+  endforeach()
 endif()
