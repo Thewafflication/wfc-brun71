@@ -4,8 +4,9 @@
 # (src/keyboard.cpp), code page 437 (src/cp437.cpp), the line editor of INPUT
 # (src/input.cpp), PRINT USING (src/using.cpp), SOUND and PLAY
 # (src/sound.cpp), the soft keys (src/keyline.cpp), key trapping
-# (src/keytrap.cpp) and, on Windows, the console
-# host that shows the screen and reads the keys (src/console.cpp).
+# (src/keytrap.cpp), the drawing of text windows (src/forms.cpp) and, on
+# Windows, the console host that shows the screen and reads the keys
+# (src/console.cpp).
 # The library is static; the version is the one in VERSION.
 #
 # Parent project functions used when present: wfc_enable_strict_warnings and
@@ -62,6 +63,7 @@ add_library(
   src/sound.cpp
   src/keyline.cpp
   src/keytrap.cpp
+  src/forms.cpp
 )
 if(WIN32)
   target_sources(wfc_brun71 PRIVATE src/console.cpp)
@@ -93,6 +95,7 @@ if(BUILD_TESTING AND WFC_BUILD_TESTS)
   wfc_brun71_test(TC-0009 keyline tests/keyline_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0010 keytrap tests/keytrap_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0011 error tests/error_test.cpp "unit;brun71")
+  wfc_brun71_test(TC-0012 forms tests/forms_test.cpp "unit;brun71")
   if(WIN32)
     wfc_brun71_test(TC-0004 console tests/console_test.cpp "integration;brun71")
   endif()
@@ -120,6 +123,11 @@ if(
   foreach(expected_file IN LISTS corpus_expected)
     get_filename_component(corpus_name "${expected_file}" NAME_WE)
     set(corpus_base "${CMAKE_CURRENT_SOURCE_DIR}/tests/corpus/${corpus_name}")
+    # A form project (.vbp) runs instead of the .bas of the same name.
+    set(corpus_input "${corpus_base}.bas")
+    if(EXISTS "${corpus_base}.vbp")
+      set(corpus_input "${corpus_base}.vbp")
+    endif()
     set(corpus_keys "")
     if(EXISTS "${corpus_base}.keys")
       set(corpus_keys "-DKEYS=${corpus_base}.keys")
@@ -134,9 +142,8 @@ if(
       add_test(
         NAME ${test_name}
         COMMAND
-          "${CMAKE_COMMAND}" "-DWFC=${WFC_EXECUTABLE}"
-          "-DINPUT=${corpus_base}.bas" "-DEXPECTED=${expected_file}"
-          ${corpus_keys} ${native_option} -P
+          "${CMAKE_COMMAND}" "-DWFC=${WFC_EXECUTABLE}" "-DINPUT=${corpus_input}"
+          "-DEXPECTED=${expected_file}" ${corpus_keys} ${native_option} -P
           "${CMAKE_CURRENT_SOURCE_DIR}/tests/corpus/run_corpus_case.cmake"
       )
       set_tests_properties(

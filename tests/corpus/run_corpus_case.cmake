@@ -2,7 +2,7 @@
 # expected text (test case TC-0005, the same check WFC runs for its corpus).
 # Without a usable WFC the script prints SKIPPED, which CTest reports as a
 # skipped test.
-# Usage: cmake -DWFC=<wfc> -DINPUT=<.bas> -DEXPECTED=<file> [-DKEYS=<file>]
+# Usage: cmake -DWFC=<wfc> -DINPUT=<.bas|.vbp> -DEXPECTED=<file> [-DKEYS=<file>]
 #   [-DNATIVE=1] -P run_corpus_case.cmake
 # KEYS is the standard input of the program: the keys it reads with INKEY$.
 # NATIVE runs the program as native code instead of in the interpreter.
@@ -37,6 +37,8 @@ execute_process(
   OUTPUT_VARIABLE actual
   ERROR_VARIABLE errors
   RESULT_VARIABLE result
+  # wfc writes UTF-8 (the box drawing of a text screen, ADR-0012).
+  ENCODING UTF8
 )
 if(NOT result EQUAL expected_result)
   message(FATAL_ERROR "wfc exited with ${result}: ${errors}")

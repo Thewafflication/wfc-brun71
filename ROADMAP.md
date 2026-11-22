@@ -58,9 +58,12 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
 - [x] Design record in WFC (ADR-0012): a text `UiHost` under the
       unchanged form model; `WfcTextUI=1` or `wfc --text-ui`; a cell is
       120 by 240 twips (`ScaleMode = 4`); which controls and events exist.
-- [ ] The form engine (`forms.hpp`): forms as text windows with a border
-      and a caption, the z-order, the focus and the Tab order, redrawing the
-      screen, `Show`, `Hide`, `Unload`, modal forms.
+- [x] Step 1: the text host in WFC and the drawing in `forms.hpp`: forms
+      as centred boxes with a caption and a shadow, the z-order, labels,
+      command buttons, check and option boxes drawn; keys from the console
+      or the standard input to the focused control, Tab, Enter, Esc, Space,
+      Alt and an access key, Alt+F4 (REQ-0011, TC-0012, `320-text-form`).
+- [ ] Modal forms and several forms at once checked in the corpus.
 - [ ] The event loop: keys and the console mouse become `KeyDown`,
       `KeyPress`, `Click`, `GotFocus`, `LostFocus`, `Change`; `Timer`
       controls; `DoEvents`.
@@ -93,6 +96,6 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
 
 - [x] WSP 1.4.0 as a submodule (`wsp/`), adoption record in
       [docs/WSP-ADOPTION.md](docs/WSP-ADOPTION.md).
-- [x] Requirements `REQ-0001` to `REQ-0010`, test cases `TC-0001` to
-      `TC-0011`, traceability checked in the lint stage.
+- [x] Requirements `REQ-0001` to `REQ-0011`, test cases `TC-0001` to
+      `TC-0012`, traceability checked in the lint stage.
 - [ ] Commit-checks record, static analysis, release records.

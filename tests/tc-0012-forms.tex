@@ -1,0 +1,53 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0012}
+\def\TCTitle{Drawing text windows}
+\def\TCPurpose{Verify the drawing of a text user interface on the screen:
+boxes with single and double lines, titles, shadows, text clipped to a width
+and to the screen, captions with access keys, and the faces of command
+buttons.}
+\def\TCPriority{\TCPriorityMedium}
+
+\def\TCRequirementRef{REQ-0011}
+\def\TCDesignRef{WFC \texttt{architecture/adr-0012-text-mode-forms.md}.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/forms.hpp};
+\texttt{tests/forms\_test.cpp}.}
+\def\TCTestTechnique{Scenario tests on a screen model: each drawing is
+compared cell by cell with the expected code page 437 characters and
+attributes; boundary values (regions partly and wholly off the screen, a
+width of 0, titles and faces longer than their room).}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_forms\_test} exists.}
+\def\TCEnvironment{Any supported target. CTest runs the program with a 60
+second timeout.}
+\def\TCAssumptions{The characters and attributes of REQ-0011, which follow
+the text-mode windowing of DOS programs; they are not taken from a
+reference program.}
+
+\def\TCInputData{Regions of 4 by 6 cells at row 2, column 3, of 4 by 5
+cells at row 24, column 78, and wholly above the screen; the titles
+\texttt{Hello} and \texttt{Long title}; the captions \texttt{\&Open},
+\texttt{Save \&As}, \texttt{A \&\& B} and \texttt{End\&}; the button
+captions \texttt{OK} and \texttt{Cancel}.}
+\def\TCInitialState{A new screen of 80 by 25 cells.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_forms\_test} (CTest \texttt{TC-0012-forms}, in
+    WFC \texttt{wfc-brun71-TC-0012-forms}).
+  \item Compare the cells of each drawing with the expected ones.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{forms: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

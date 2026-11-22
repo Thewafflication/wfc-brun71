@@ -17,6 +17,7 @@ namespace.
 | [REQ-0008](req-0008-soft-keys.md) | Soft keys: `KEY n`, `ON`, `OFF`, `LIST` | `TC-0009`, `TC-0005` |
 | [REQ-0009](req-0009-key-traps.md) | Key trapping: `ON KEY(n) GOSUB`, `KEY(n)` | `TC-0010`, `TC-0005` |
 | [REQ-0010](req-0010-errors-write-screen.md) | Error messages, `WRITE`, `SCREEN()` | `TC-0011`, `TC-0001`, `TC-0005` |
+| [REQ-0011](req-0011-text-forms.md) | VB6 forms in text mode | `TC-0012`, `TC-0005` |
 
 The test case specifications are `tests/tc-NNNN-<title>.tex`; the CTest names
 are `TC-NNNN-<name>`; `tests/run-tc-NNNN.ps1` runs one test case (checked by
