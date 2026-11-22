@@ -82,8 +82,6 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
       screen.
 - [ ] Modal forms, several forms at once and `DoEvents` checked in the
       corpus.
-- [ ] A `.frm` in `ScaleMode = 4` (positions in characters) placed as
-      VB6 places it.
 - [ ] Tried by hand in a live console (keys, mouse, Quick Edit).
 
 ## Later

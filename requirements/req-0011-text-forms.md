@@ -123,9 +123,7 @@ Steps 1 to 5 of M3: a text box has one line (no `MultiLine`, no
 style chooses from its list); a list box selects one item (no
 `MultiSelect`, no `Columns`); menus show no shortcut text, and
 `PopupMenu` is not drawn; timers do not fire while a dialog is open; the
-mouse wheel and dragging (`DragMode`) are not used; a `.frm` whose
-container has `ScaleMode = 4` places its controls as if its numbers were
-twips (WFC ADR-0012).
+mouse wheel and dragging (`DragMode`) are not used (WFC ADR-0012).
 
 ## Verification
 
