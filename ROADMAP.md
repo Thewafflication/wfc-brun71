@@ -47,23 +47,38 @@ A checked item is present, tested and passing; an unchecked one is planned.
 - [x] Corpus programs in `tests/corpus`, run by WFC in the interpreter and
       as native code (`TC-MP0002-corpus-30x-*`), and here as `TC-0005`.
 
-## M3: the User Interface Toolbox
+## M3: VB6 forms in text mode
 
-A clone of the PDS 7.1 User Interface Toolbox (`GENERAL.BAS`, `MOUSE.BAS`,
-`MENU.BAS`, `WINDOW.BAS`) callable from programs WFC runs, drawn on the M1
-screen:
+The owner's direction (2026-11-22): write programs in the VB6 language with
+an event-driven text user interface, as Visual Basic for MS-DOS did. A VB6
+project whose forms are marked as text forms runs on the M1 screen instead
+of Win32 windows; the program stays single-threaded and event-driven (events,
+`Timer`, `DoEvents`), like VB6 itself.
 
-- [ ] Mouse (`MouseInit`, `MouseShow`, `MouseHide`, `MousePoll`, `MouseBorder`)
-      over console mouse input.
-- [ ] Pull-down menus (`MenuInit`, `MenuSet`, `MenuItemToggle`, `MenuEvent`,
-      `MenuDo`, shortcut keys).
-- [ ] Windows (`WindowInit`, `WindowOpen`, `WindowClose`, `WindowPrint`,
-      `WindowDo`, buttons, edit fields, list boxes, `Alert`, `ListBox`).
-- [ ] The toolbox's `GloStat`/`GloMenu`/`GloWindow` state and `TYPE`s as PDS
-      declares them, so toolbox programs compile unchanged.
+- [ ] Design record in WFC (an ADR): how a project asks for text forms, how
+      twips map to character cells, which controls and events exist.
+- [ ] The form engine (`forms.hpp`): forms as text windows with a border
+      and a caption, the z-order, the focus and the Tab order, redrawing the
+      screen, `Show`, `Hide`, `Unload`, modal forms.
+- [ ] The event loop: keys and the console mouse become `KeyDown`,
+      `KeyPress`, `Click`, `GotFocus`, `LostFocus`, `Change`; `Timer`
+      controls; `DoEvents`.
+- [ ] Controls: `Label`, `TextBox`, `CommandButton`, `CheckBox`,
+      `OptionButton`, `Frame`, `ListBox`, `ComboBox`, `Timer`, scroll bars.
+- [ ] Menus from the form's `Menu` editor entries, as a pull-down menu bar
+      with Alt and shortcut keys.
+- [ ] `MsgBox` and `InputBox` as text dialogs.
+- [ ] WFC runs such a project in the interpreter and as native code;
+      corpus programs drive it with `.keys` files and check the final
+      screen.
 
 ## Later
 
+- [ ] Several threads or programs at once: isolated workers, each with its
+      own interpreter, that pass messages to the program as events.
+- [ ] The PDS 7.1 User Interface Toolbox (`GENERAL.BAS`, `MOUSE.BAS`,
+      `MENU.BAS`, `WINDOW.BAS`), for old toolbox programs, drawn with the
+      M3 form engine where it fits.
 - [ ] Graphics screens (`SCREEN 1`, `2`, `7`-`13`) on a WFC window.
 - [ ] Every statement of [COMPATIBILITY.md](COMPATIBILITY.md) checked against
       BRUN71 under DOS (a reference probe, as WFC does with VB6).
