@@ -1,0 +1,4 @@
+Type=Exe
+Form=324-text-menus.frm
+Startup="Form1"
+WfcTextUI=1

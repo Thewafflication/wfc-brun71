@@ -71,6 +71,9 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
       scroll bar, the open list of a combo box), scroll bars, timers on the
       clock or, with keys from a file, on a virtual clock
       (`322-text-lists`, `323-text-combo-open`).
+- [x] Step 4: the menu bar and pull-down menus (access keys, F10, check
+      marks, menus in menus, `Shortcut`), `MsgBox` and `InputBox` as text
+      dialogs (`324-text-menus`, `325-text-msgbox`).
 - [ ] Modal forms and several forms at once checked in the corpus.
 - [ ] The event loop: keys and the console mouse become `KeyDown`,
       `KeyPress`, `Click`, `GotFocus`, `LostFocus`, `Change`; `Timer`

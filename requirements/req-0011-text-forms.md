@@ -63,6 +63,33 @@ taken from a reference program)
   0, 0 (a key of scan code 0, which no key has) are read: the timers'
   clock moves on to the next one that is due, and it fires, so a program
   with timers runs the same on every machine.
+- **Menus.** A form with visible menus has a menu bar on its first row
+  inside the border, above its client area: each title as ` text `,
+  its access key in white. F10 opens the first menu, Alt and a title's
+  access key that menu; its `Click` is raised as it opens. An open menu
+  is a single box below its title (an item's menu beside the item) with
+  a shadow: `√` before a checked item, `►` after one that opens a menu, a
+  line for a `-` item, disabled items in dark grey, the highlighted item
+  white on blue. Up and Down move the highlight over the items that can
+  be chosen; Right opens the highlighted item's menu or the next title's,
+  Left goes back or to the previous title; Enter or an item's access key
+  chooses it (its `Click`, after the menus close); Esc closes one menu,
+  F10 all of them. A menu item's `Shortcut` (`^N`, `{F5}`, `+{DEL}` as
+  the `.frm` writes it) chooses it from anywhere on its form; the form
+  model does this for every host.
+- **Dialogs.** `MsgBox` and `InputBox` are boxes with a double border in
+  white on grey, their title on it and a shadow, centred on the screen
+  over the forms: the text in lines (a line break, or a blank where a line
+  is full), an input field with its default text and the caret after it
+  (`InputBox`), then the buttons: OK; OK and Cancel; Abort, Retry and
+  Ignore; Yes, No and Cancel; Yes and No; Retry and Cancel, the default
+  one (`vbDefaultButton2`, `3`) with the focus. Tab, Shift+Tab, Left and
+  Right move the focus, Enter chooses the focused button (OK from the
+  input field), a button's access key (A, R, I, Y, N) chooses it, and
+  Esc gives Cancel, or OK when it is the only button. `MsgBox` returns
+  the button's value (1 to 7); `InputBox` the text, or `""` for Cancel.
+  When the keys end with a dialog open, the screen keeps showing it and
+  it gives the answer of Esc (or of its default button).
 - **The end.** The program ends when its last form is unloaded, as in VB6.
   When the keys come from the standard input and it has ended, the forms
   that are still loaded are closed, but the screen keeps showing them: its
@@ -70,15 +97,17 @@ taken from a reference program)
 
 ## Known limits
 
-Steps 1 to 3 of M3: a text box has one line (no `MultiLine`, no
+Steps 1 to 4 of M3: a text box has one line (no `MultiLine`, no
 `PasswordChar`, no selection); a combo box's text cannot be typed (every
 style chooses from its list); a list box selects one item (no
-`MultiSelect`, no `Columns`); menus, `MsgBox`, `InputBox` and the mouse
-come in later steps (WFC ADR-0012).
+`MultiSelect`, no `Columns`); menus show no shortcut text, and
+`PopupMenu` is not drawn; timers do not fire while a dialog is open;
+the mouse comes in step 5 (WFC ADR-0012).
 
 ## Verification
 
 **Method:** Test
 
 **References:** `TC-0012` (the drawing), `TC-0005` (`320-text-form`,
-`321-text-input`, `322-text-lists` and `323-text-combo-open` in WFC)
+`321-text-input`, `322-text-lists`, `323-text-combo-open`,
+`324-text-menus` and `325-text-msgbox` in WFC)
