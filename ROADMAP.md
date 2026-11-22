@@ -63,6 +63,10 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
       command buttons, check and option boxes drawn; keys from the console
       or the standard input to the focused control, Tab, Enter, Esc, Space,
       Alt and an access key, Alt+F4 (REQ-0011, TC-0012, `320-text-form`).
+- [x] Step 2: typing in text boxes (the caret, Backspace, Delete, Home,
+      End, scrolling, `KeyPress` that changes `KeyAscii`, `Locked`,
+      `MaxLength`), option buttons moved with the arrow keys, frames
+      (`321-text-input`).
 - [ ] Modal forms and several forms at once checked in the corpus.
 - [ ] The event loop: keys and the console mouse become `KeyDown`,
       `KeyPress`, `Click`, `GotFocus`, `LostFocus`, `Change`; `Timer`

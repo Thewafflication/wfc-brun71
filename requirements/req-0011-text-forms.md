@@ -30,6 +30,18 @@ taken from a reference program)
   or the `Default` button, Esc the `Cancel` button, Space the focused
   button, Alt and an access key the control it marks (the form model of
   WFC does this for every host). Alt+F4 closes the active form.
+- **Typing.** A text box shows one line of its text, scrolled so that the
+  caret is in it, and keeps its caret: a character the program's
+  `KeyPress` leaves (`KeyAscii` not 0, perhaps changed) goes in at the
+  caret; Backspace deletes before it, Delete after it; Left, Right, Home
+  and End move it. The model takes the new text and raises `Change`. A
+  `Locked` text box takes no typing, and one at its `MaxLength` no more
+  characters. A text the program sets puts the caret at its start.
+- **Option buttons and frames.** The arrow keys on an option button
+  select the next (Right, Down) or previous (Left, Up) option button of
+  its container, ordered from top to bottom and left to right, as a
+  click does. A frame is a single box with its caption on the top
+  border; its controls are placed from its top-left cell.
 - **The end.** The program ends when its last form is unloaded, as in VB6.
   When the keys come from the standard input and it has ended, the forms
   that are still loaded are closed, but the screen keeps showing them: its
@@ -37,13 +49,13 @@ taken from a reference program)
 
 ## Known limits
 
-Step 1 of M3: text boxes do not take typing yet; lists, combo boxes, scroll
-bars, menus, `MsgBox`, `InputBox` and the mouse come in later steps (WFC
-ADR-0012).
+Steps 1 and 2 of M3: a text box has one line (no `MultiLine`, no
+`PasswordChar`, no selection); lists, combo boxes, scroll bars, menus,
+`MsgBox`, `InputBox` and the mouse come in later steps (WFC ADR-0012).
 
 ## Verification
 
 **Method:** Test
 
-**References:** `TC-0012` (the drawing), `TC-0005` (`320-text-form` in
-WFC)
+**References:** `TC-0012` (the drawing), `TC-0005` (`320-text-form` and
+`321-text-input` in WFC)

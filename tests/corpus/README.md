@@ -33,4 +33,5 @@ and verifies `REQ-0004` to `REQ-0011` (see `requirements/`).
 | `309-pds-on-key` | `ON KEY(n) GOSUB`, `KEY(n) ON/STOP/OFF`, a user-defined key, a handler inside a handler, errors 5 |
 | `310-pds-write-screen` | `WRITE` to the plain output and the screen, `SCREEN(row, col [, flag])`, error 5 |
 | `311-pds-error-exit` | an error no handler takes: BRUN71's message on the screen, exit status 1 (`311-pds-error-exit.exitcode`) |
+| `321-text-input` | typing in text boxes: the caret, Delete, Backspace, scrolling, `MaxLength`, a `KeyPress` that changes `KeyAscii`, `Locked`; option buttons in a frame moved with the arrow keys |
 | `320-text-form` | a VB6 form on the text screen: centred box, title, label, check box, buttons; Space, Enter on the `Default` button, Tab, Alt and an access key |
