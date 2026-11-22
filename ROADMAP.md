@@ -38,8 +38,10 @@ A checked item is present, tested and passing; an unchecked one is planned.
 - [x] `PRINT USING` and `PRINT #n, USING` (`using.hpp`; REQ-0006,
       TC-0007).
 - [ ] `WRITE` to the screen.
-- [ ] `BEEP`, `SOUND`, `PLAY`; `SLEEP`; `KEY ON/OFF/LIST` and the soft-key
-      line; `ON KEY(n) GOSUB` and `KEY(n) ON/OFF/STOP`.
+- [x] `BEEP`, `SOUND`, `PLAY` (`sound.hpp`), `SLEEP` (REQ-0007, TC-0008);
+      `KEY n`, `KEY ON/OFF/LIST` and the soft-key line (`keyline.hpp`;
+      REQ-0008, TC-0009).
+- [ ] `ON KEY(n) GOSUB`, `KEY(n) ON/OFF/STOP` and the user-defined keys.
 - [x] Corpus programs in `tests/corpus`, run by WFC in the interpreter and
       as native code (`TC-MP0002-corpus-30x-*`), and here as `TC-0005`.
 
@@ -73,6 +75,6 @@ screen:
 
 - [x] WSP 1.4.0 as a submodule (`wsp/`), adoption record in
       [docs/WSP-ADOPTION.md](docs/WSP-ADOPTION.md).
-- [x] Requirements `REQ-0001` to `REQ-0006`, test cases `TC-0001` to
-      `TC-0007`, traceability checked in the lint stage.
+- [x] Requirements `REQ-0001` to `REQ-0008`, test cases `TC-0001` to
+      `TC-0009`, traceability checked in the lint stage.
 - [ ] Commit-checks record, static analysis, release records.

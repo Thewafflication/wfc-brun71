@@ -1,0 +1,49 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0008}
+\def\TCTitle{SOUND and PLAY}
+\def\TCPurpose{Verify the tones SOUND and PLAY make: the range of SOUND, the
+notes, lengths, dots, pauses, octaves, tempo and styles of the music macro
+language, the state that lasts from one PLAY to the next, and error 5.}
+\def\TCPriority{\TCPriorityHigh}
+
+\def\TCRequirementRef{REQ-0007}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/sound.hpp};
+\texttt{src/sound.cpp}; \texttt{tests/sound\_test.cpp}.}
+\def\TCTestTechnique{Equivalence classes of the commands; boundary values of
+the frequency, duration, octave, length, tempo and note numbers.}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_sound\_test} exists.}
+\def\TCEnvironment{Any supported target; no sound is played. CTest runs the
+program with a 60 second timeout.}
+\def\TCAssumptions{The note frequencies (N46 is 440 Hz) and the styles
+(7/8, all, 3/4 of the length) of REQ-0007, not measured on BRUN71.}
+
+\def\TCInputData{SOUND arguments at and beyond their limits; music strings
+with each command, upper and lower case, blanks; refused strings.}
+\def\TCInitialState{A new player: O4, L4, T120, MN.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_sound\_test} (CTest \texttt{TC-0008-sound}, in
+    WFC \texttt{wfc-brun71-TC-0008-sound}).
+  \item Compare the tones (frequency and milliseconds) of each SOUND and
+    music string with the expected ones.
+  \item Check the octave, length and tempo kept after each string.
+  \item Check that the refused arguments and strings raise error 5.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{sound: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

@@ -18,6 +18,10 @@ program on a PC text screen, running in a Windows console.
   `LINE INPUT`, and how `INPUT` splits its line into fields and numbers.
 - `include/wfc/brun71/using.hpp` `PRINT USING`: numbers and strings
   formatted by the fields of a format string.
+- `include/wfc/brun71/sound.hpp` `SOUND` and `PLAY`: the tones of the music
+  macro language.
+- `include/wfc/brun71/keyline.hpp` the soft keys: `KEY n`, `KEY ON`,
+  `KEY OFF`, `KEY LIST`.
 - `include/wfc/brun71/cp437.hpp` code page 437 to Unicode and back.
 - `include/wfc/brun71/console.hpp` the Windows console host: shows a screen in
   a console screen buffer of its own and reads keys into the buffer.

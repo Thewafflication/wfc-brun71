@@ -7,9 +7,13 @@ pos = 2
 Print color(1); pos
 width = 40
 Print width
-Open "303-pds-names.tmp" For Output As #1
+' A name of its own: the interpreted and native runs may overlap.
+Randomize Timer
+Dim f As String
+f = "303-pds-names-" & CStr(Int(Rnd * 1000000)) & ".tmp"
+Open f For Output As #1
 Width #1, 20
 Print #1, "x"
 Close #1
-Kill "303-pds-names.tmp"
+Kill f
 Print "plain output"

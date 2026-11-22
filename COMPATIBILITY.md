@@ -27,8 +27,9 @@ manuals do not say.
 | `INPUT$(n)` | done, in WFC | from the keyboard; `INPUT$(n, #f)` reads a file as in VB6 |
 | `PRINT USING`, `PRINT #n, USING` | done, in WFC | |
 | `WRITE` to the screen | planned | M2 |
-| `BEEP`, `SOUND`, `PLAY`, `SLEEP` | planned | M2; `CHR$(7)` already calls the host's bell |
-| `KEY` (soft keys, `ON KEY`) | planned | M2 |
+| `BEEP`, `SOUND`, `PLAY`, `SLEEP` | done, in WFC | heard on the console's speaker when the screen is shown there |
+| `KEY n`, `KEY ON`, `KEY OFF`, `KEY LIST` | done, in WFC | |
+| `KEY(n) ON/OFF/STOP`, `ON KEY(n) GOSUB` | planned | M2 |
 | `SCREEN n` (graphics) | planned | later |
 | User Interface Toolbox | planned | M3 |
 
@@ -58,6 +59,11 @@ manuals do not say.
 | `PRINT USING` without a sign field puts the minus of a negative number before the `$` of `$$`; it drops the 0 before the point when there is no room for it | assumed |
 | A `PRINT USING` exponent field keeps one position for the sign when it has no sign field | documented (the manual's examples) |
 | After the last value `PRINT USING` prints the format's text up to the next field | assumed |
+| `PLAY`: N46 (A in O3) is 440 Hz; `MN` sounds 7/8 of a note, `MS` 3/4; each dot makes a note 1.5 times longer; `<` and `>` stop at octaves 0 and 6 | assumed |
+| `BEEP` is 800 Hz for a quarter of a second | assumed |
+| `SLEEP` ends at once when a key is already waiting; the key stays for `INKEY$` | assumed |
+| A compiled program starts with empty soft-key texts | assumed |
+| The soft-key line: 8 columns a key, the number in normal video, 6 characters (5 for key 10) in reverse video; keys 11 and 12 are not shown | assumed |
 | `PRINT USING` with a format that has no field is error 5; a string in a numeric field, or a number in a string field, error 13 | documented |
 
 ## WFC differences
@@ -70,6 +76,10 @@ manuals do not say.
 - A program that has its own `Sub Locate` (or `Cls`, `Color`, `Width`) keeps
   calling it in the interpreter; compiled to native code it gets the
   statement.
+- `MB` (music in the background) plays in the foreground, like `MF`; the
+  program waits for the music.
+- A VB6 `Beep` in a program that has not started the text screen stays
+  silent, as before.
 - A variable without a type suffix or `DEF` type is a Variant in WFC, not a
   single-precision number: `INPUT n` stores a number when the field is one
   and the text otherwise, instead of asking again.
@@ -81,6 +91,9 @@ manuals do not say.
 
 - A console has no blink: the blink bit (`COLOR 16`-`31`) is dropped and the
   colours are kept.
+- `SOUND` and `PLAY` use the Windows `Beep` (the speaker or the default
+  sound device); with the output redirected nothing is heard and no time
+  passes.
 - A console has no border: `COLOR , , border` is kept but not shown.
 - The console may refuse a size (a window smaller than 80 by 25); the cells are
   written anyway and the console clips them.

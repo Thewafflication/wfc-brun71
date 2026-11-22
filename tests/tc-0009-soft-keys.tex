@@ -1,0 +1,49 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0009}
+\def\TCTitle{Soft keys}
+\def\TCPurpose{Verify KEY n, text\$, KEY ON, KEY OFF and KEY LIST: the texts
+kept, the line drawn on the bottom row (numbers, labels, reverse video,
+control characters, key 10, 40 columns), redrawing and clearing it.}
+\def\TCPriority{\TCPriorityMedium}
+
+\def\TCRequirementRef{REQ-0008}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/keyline.hpp};
+\texttt{src/keyline.cpp}; \texttt{tests/keyline\_test.cpp}.}
+\def\TCTestTechnique{Scenario tests on a screen; boundary values of the key
+number and the text length.}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_keyline\_test} exists.}
+\def\TCEnvironment{Any supported target; no console is used. CTest runs the
+program with a 60 second timeout.}
+\def\TCAssumptions{The layout of the line in REQ-0008 (8 columns a key, 6
+characters of text, reverse video), not taken from BRUN71 itself.}
+
+\def\TCInputData{Texts for keys 1, 2, 5, 6, 10 and 12, one with a carriage
+return and one longer than 15 characters; key numbers 0 and 13.}
+\def\TCInitialState{A new 80 by 25 screen and no texts.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_keyline\_test} (CTest
+    \texttt{TC-0009-keyline}, in WFC \texttt{wfc-brun71-TC-0009-keyline}).
+  \item Check the texts and the lines of KEY LIST.
+  \item Check the characters and attributes of the bottom row after KEY ON,
+    a new text, KEY OFF, and on a 40-column screen.
+  \item Check that key numbers out of range raise error 5.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{soft keys: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}
