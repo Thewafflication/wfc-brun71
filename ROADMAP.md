@@ -55,8 +55,9 @@ project whose forms are marked as text forms runs on the M1 screen instead
 of Win32 windows; the program stays single-threaded and event-driven (events,
 `Timer`, `DoEvents`), like VB6 itself.
 
-- [ ] Design record in WFC (an ADR): how a project asks for text forms, how
-      twips map to character cells, which controls and events exist.
+- [x] Design record in WFC (ADR-0012): a text `UiHost` under the
+      unchanged form model; `WfcTextUI=1` or `wfc --text-ui`; a cell is
+      120 by 240 twips (`ScaleMode = 4`); which controls and events exist.
 - [ ] The form engine (`forms.hpp`): forms as text windows with a border
       and a caption, the z-order, the focus and the Tab order, redrawing the
       screen, `Show`, `Hide`, `Unload`, modal forms.
