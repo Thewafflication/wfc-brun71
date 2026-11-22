@@ -42,6 +42,27 @@ taken from a reference program)
   its container, ordered from top to bottom and left to right, as a
   click does. A frame is a single box with its caption on the top
   border; its controls are placed from its top-left cell.
+- **Lists.** A list box shows its items from the first one in view,
+  scrolled so that the selection is in it, the selection white on blue
+  while the list has the focus (black on grey otherwise), and a scroll
+  bar in its last column (`▲`, `░` with a `█` thumb, `▼`) when the items
+  do not fit. Up, Down, Page Up, Page Down, Home and End move the
+  selection, and a letter selects the next item that starts with it; the
+  model raises `Click`. A combo box is a field with `↓` at its end; the
+  same keys choose its item, and F4 or Alt+Down opens its list (up to 8
+  items in a box below it, or above it at the bottom of the screen) over
+  everything else; Enter, Esc, F4, Alt+Down or leaving it closes it, and
+  the Enter or Esc that closes it does not press a button.
+- **Scroll bars.** A scroll bar is `◄` and `►` (`▲` and `▼` upright) with a
+  track of `░` and a `█` thumb placed by `Value` between `Min` and `Max`.
+  Left and Up move it by `SmallChange` toward `Min`, Right and Down toward
+  `Max`, Page Up and Page Down by `LargeChange`, Home and End to its ends;
+  the model raises `Change`.
+- **Timers.** With keys from the console, a `Timer` fires on the clock.
+  With keys from the standard input, time passes only when the two bytes
+  0, 0 (a key of scan code 0, which no key has) are read: the timers'
+  clock moves on to the next one that is due, and it fires, so a program
+  with timers runs the same on every machine.
 - **The end.** The program ends when its last form is unloaded, as in VB6.
   When the keys come from the standard input and it has ended, the forms
   that are still loaded are closed, but the screen keeps showing them: its
@@ -49,13 +70,15 @@ taken from a reference program)
 
 ## Known limits
 
-Steps 1 and 2 of M3: a text box has one line (no `MultiLine`, no
-`PasswordChar`, no selection); lists, combo boxes, scroll bars, menus,
-`MsgBox`, `InputBox` and the mouse come in later steps (WFC ADR-0012).
+Steps 1 to 3 of M3: a text box has one line (no `MultiLine`, no
+`PasswordChar`, no selection); a combo box's text cannot be typed (every
+style chooses from its list); a list box selects one item (no
+`MultiSelect`, no `Columns`); menus, `MsgBox`, `InputBox` and the mouse
+come in later steps (WFC ADR-0012).
 
 ## Verification
 
 **Method:** Test
 
-**References:** `TC-0012` (the drawing), `TC-0005` (`320-text-form` and
-`321-text-input` in WFC)
+**References:** `TC-0012` (the drawing), `TC-0005` (`320-text-form`,
+`321-text-input`, `322-text-lists` and `323-text-combo-open` in WFC)

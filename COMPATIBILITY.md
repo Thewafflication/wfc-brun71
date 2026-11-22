@@ -32,7 +32,7 @@ manuals do not say.
 | `KEY n`, `KEY ON`, `KEY OFF`, `KEY LIST` | done, in WFC | |
 | `KEY(n) ON/OFF/STOP`, `ON KEY(n) GOSUB` | done, in WFC | interpreted only; checked at the module level |
 | `SCREEN n` (graphics) | planned | later |
-| VB6 forms in text mode | steps 1-2, in WFC | forms, labels, buttons, check and option boxes, frames, one-line text boxes; lists, menus and dialogs come next |
+| VB6 forms in text mode | steps 1-3, in WFC | forms, labels, buttons, check and option boxes, frames, one-line text boxes, list and combo boxes, scroll bars, timers; menus and dialogs come next |
 | User Interface Toolbox | planned | later |
 
 ## Rules not yet checked against BRUN71

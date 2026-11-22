@@ -9,7 +9,8 @@ program's standard input: the keys it reads with `INKEY$` (each byte a key, a
 line break is Enter, a 0 byte is followed by the scan code of an extended
 key) and the lines it reads with `INPUT`. A `NNN-name.vbp` beside it is a VB6
 project with `WfcTextUI=1` (WFC ADR-0012) that runs instead: its forms are
-shown on the screen and the keys drive them. A `.exitcode` file gives the exit
+shown on the screen and the keys drive them; the two bytes 0, 0 in its
+`.keys` file let its timers' clock move on to the next one that is due. A `.exitcode` file gives the exit
 status the program must end with when it is not 0.
 
 WFC registers each program twice, `TC-MP0002-corpus-NNN-name` (interpreter)
@@ -34,4 +35,6 @@ and verifies `REQ-0004` to `REQ-0011` (see `requirements/`).
 | `310-pds-write-screen` | `WRITE` to the plain output and the screen, `SCREEN(row, col [, flag])`, error 5 |
 | `311-pds-error-exit` | an error no handler takes: BRUN71's message on the screen, exit status 1 (`311-pds-error-exit.exitcode`) |
 | `321-text-input` | typing in text boxes: the caret, Delete, Backspace, scrolling, `MaxLength`, a `KeyPress` that changes `KeyAscii`, `Locked`; option buttons in a frame moved with the arrow keys |
+| `322-text-lists` | a list box (Down, End, a letter, its scroll bar), a combo box chosen from its open list, a scroll bar (Right, Page Up), a timer ticked by the 0, 0 key |
+| `323-text-combo-open` | the same form with the combo box's list left open over the other controls |
 | `320-text-form` | a VB6 form on the text screen: centred box, title, label, check box, buttons; Space, Enter on the `Default` button, Tab, Alt and an access key |

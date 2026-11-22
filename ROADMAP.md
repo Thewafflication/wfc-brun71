@@ -67,6 +67,10 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
       End, scrolling, `KeyPress` that changes `KeyAscii`, `Locked`,
       `MaxLength`), option buttons moved with the arrow keys, frames
       (`321-text-input`).
+- [x] Step 3: list boxes and combo boxes (keys, a letter, scrolling, a
+      scroll bar, the open list of a combo box), scroll bars, timers on the
+      clock or, with keys from a file, on a virtual clock
+      (`322-text-lists`, `323-text-combo-open`).
 - [ ] Modal forms and several forms at once checked in the corpus.
 - [ ] The event loop: keys and the console mouse become `KeyDown`,
       `KeyPress`, `Click`, `GotFocus`, `LostFocus`, `Change`; `Timer`
