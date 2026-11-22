@@ -1,0 +1,52 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0010}
+\def\TCTitle{Key traps}
+\def\TCPurpose{Verify key trapping: the valid key numbers, which keys a trap
+takes with ON, STOP and OFF, handlers, the events that wait and fire, the
+stop around a handler and its RETURN, and the keys a program defines by flags
+and scan code.}
+\def\TCPriority{\TCPriorityMedium}
+
+\def\TCRequirementRef{REQ-0009}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/keytrap.hpp};
+\texttt{src/keytrap.cpp}; \texttt{tests/keytrap\_test.cpp}.}
+\def\TCTestTechnique{State transitions of a trap (off, on, stopped, in a
+handler); equivalence classes of the user-defined key flags; boundary values
+of the key numbers.}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_keytrap\_test} exists.}
+\def\TCEnvironment{Any supported target; no console is used. CTest runs the
+program with a 60 second timeout.}
+\def\TCAssumptions{The trap numbers and flags of REQ-0009; the US keyboard
+layout for the scan codes.}
+
+\def\TCInputData{Key numbers 0, 1, 11, 14, 15, 25, 26, 29, 30, 31, 32; the
+keys F1, F10, F12, Up, letters, Ctrl+A, Alt+C and Ins; definitions with the
+flags 0, 1, 4, 8 and 64+128.}
+\def\TCInitialState{Every trap off, with no handler.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_keytrap\_test} (CTest \texttt{TC-0010-keytrap},
+    in WFC \texttt{wfc-brun71-TC-0010-keytrap}).
+  \item Check the valid numbers and that the others raise error 5.
+  \item Check which keys are taken and which events fire, in order, through
+    ON, STOP, OFF and a handler's begin and end.
+  \item Check the user-defined keys against the keys they describe.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{key traps: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

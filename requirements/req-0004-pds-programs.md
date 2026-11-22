@@ -35,9 +35,8 @@ WFC `architecture/adr-0011-pds-text-programs.md`)
 ## Known limits
 
 `SCREEN(row, col)` is not yet available (the name is VB6's `Screen` object);
-`ERROR$(5)` gives Visual Basic's text; `ON KEY` follows (ROADMAP M2).
-`INPUT`, `PRINT USING`, the sound statements and the soft keys are REQ-0005
-to REQ-0008.
+`ERROR$(5)` gives Visual Basic's text. `INPUT`, `PRINT USING`, the sound
+statements, the soft keys and key trapping are REQ-0005 to REQ-0009.
 
 ## Verification
 

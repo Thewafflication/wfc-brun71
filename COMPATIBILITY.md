@@ -29,7 +29,7 @@ manuals do not say.
 | `WRITE` to the screen | planned | M2 |
 | `BEEP`, `SOUND`, `PLAY`, `SLEEP` | done, in WFC | heard on the console's speaker when the screen is shown there |
 | `KEY n`, `KEY ON`, `KEY OFF`, `KEY LIST` | done, in WFC | |
-| `KEY(n) ON/OFF/STOP`, `ON KEY(n) GOSUB` | planned | M2 |
+| `KEY(n) ON/OFF/STOP`, `ON KEY(n) GOSUB` | done, in WFC | interpreted only; checked at the module level |
 | `SCREEN n` (graphics) | planned | later |
 | User Interface Toolbox | planned | M3 |
 
@@ -63,6 +63,9 @@ manuals do not say.
 | `BEEP` is 800 Hz for a quarter of a second | assumed |
 | `SLEEP` ends at once when a key is already waiting; the key stays for `INKEY$` | assumed |
 | A compiled program starts with empty soft-key texts | assumed |
+| A trap with `KEY(n) ON` but no `ON KEY(n) GOSUB` leaves the key to the program | assumed |
+| A trapped key ends `SLEEP` | documented |
+| User-defined trap keys are matched by the character their scan code types on a US keyboard (letters, digits, Space, Enter, Esc, Tab, Backspace); Alt and extended keys by the scan code | assumed (BRUN71 reads the scan code from the keyboard) |
 | The soft-key line: 8 columns a key, the number in normal video, 6 characters (5 for key 10) in reverse video; keys 11 and 12 are not shown | assumed |
 | `PRINT USING` with a format that has no field is error 5; a string in a numeric field, or a number in a string field, error 13 | documented |
 
@@ -76,6 +79,14 @@ manuals do not say.
 - A program that has its own `Sub Locate` (or `Cls`, `Color`, `Width`) keeps
   calling it in the interpreter; compiled to native code it gets the
   statement.
+- Key events are checked only before statements of the module level, not
+  inside `SUB` and `FUNCTION` procedures (BRUN71, compiled with `/V`, checks
+  everywhere); an event that comes in a procedure waits until it returns.
+  Native code does not compile `GOSUB` yet, so a program with `ON KEY` runs
+  in the interpreter.
+- With keys from the standard input, the check before each statement reads
+  one key when none is waiting, so the handlers run as early as the keys
+  allow.
 - `MB` (music in the background) plays in the foreground, like `MF`; the
   program waits for the music.
 - A VB6 `Beep` in a program that has not started the text screen stays

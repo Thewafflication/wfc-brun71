@@ -20,8 +20,8 @@ in `COMPATIBILITY.md`)
 
 ## Known limits
 
-`KEY(n) ON/OFF/STOP`, `ON KEY(n) GOSUB` and the user-defined keys 15-25 are
-planned (ROADMAP M2). Pressing a function key does not type its text.
+Key trapping and the user-defined keys 15-25 are REQ-0009. Pressing a
+function key does not type its text.
 
 ## Verification
 

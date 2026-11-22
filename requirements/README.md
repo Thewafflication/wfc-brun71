@@ -15,6 +15,7 @@ namespace.
 | [REQ-0006](req-0006-print-using.md) | `PRINT USING` | `TC-0007`, `TC-0005` |
 | [REQ-0007](req-0007-sound.md) | `SOUND`, `PLAY`, `BEEP` and `SLEEP` | `TC-0008`, `TC-0005` |
 | [REQ-0008](req-0008-soft-keys.md) | Soft keys: `KEY n`, `ON`, `OFF`, `LIST` | `TC-0009`, `TC-0005` |
+| [REQ-0009](req-0009-key-traps.md) | Key trapping: `ON KEY(n) GOSUB`, `KEY(n)` | `TC-0010`, `TC-0005` |
 
 The test case specifications are `tests/tc-NNNN-<title>.tex`; the CTest names
 are `TC-NNNN-<name>`; `tests/run-tc-NNNN.ps1` runs one test case (checked by

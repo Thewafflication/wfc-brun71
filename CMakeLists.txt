@@ -3,7 +3,8 @@
 # The text screen of SCREEN 0 (src/screen.cpp), the keyboard of INKEY$
 # (src/keyboard.cpp), code page 437 (src/cp437.cpp), the line editor of INPUT
 # (src/input.cpp), PRINT USING (src/using.cpp), SOUND and PLAY
-# (src/sound.cpp), the soft keys (src/keyline.cpp) and, on Windows, the console
+# (src/sound.cpp), the soft keys (src/keyline.cpp), key trapping
+# (src/keytrap.cpp) and, on Windows, the console
 # host that shows the screen and reads the keys (src/console.cpp).
 # The library is static; the version is the one in VERSION.
 #
@@ -60,6 +61,7 @@ add_library(
   src/using.cpp
   src/sound.cpp
   src/keyline.cpp
+  src/keytrap.cpp
 )
 if(WIN32)
   target_sources(wfc_brun71 PRIVATE src/console.cpp)
@@ -89,6 +91,7 @@ if(BUILD_TESTING AND WFC_BUILD_TESTS)
   wfc_brun71_test(TC-0007 using tests/using_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0008 sound tests/sound_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0009 keyline tests/keyline_test.cpp "unit;brun71")
+  wfc_brun71_test(TC-0010 keytrap tests/keytrap_test.cpp "unit;brun71")
   if(WIN32)
     wfc_brun71_test(TC-0004 console tests/console_test.cpp "integration;brun71")
   endif()
