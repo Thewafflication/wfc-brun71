@@ -9,9 +9,11 @@
 #pragma once
 
 #include <cstdint>
+#include <deque>
 #include <memory>
 
 #include "wfc/brun71/keyboard.hpp"
+#include "wfc/brun71/mouse.hpp"
 #include "wfc/brun71/screen.hpp"
 
 namespace wfc::brun71 {
@@ -32,9 +34,15 @@ public:
     void present(const TextScreen& screen);
 
     // Moves the keys waiting in the console input into the buffer; a key
-    // that does not fit is lost and the console beeps. Returns how many keys
-    // were added.
-    int poll(KeyBuffer& buffer);
+    // that does not fit is lost and the console beeps. With `mouse`, the
+    // mouse events go there (see enable_mouse). Returns how many keys were
+    // added.
+    int poll(KeyBuffer& buffer, std::deque<MouseEvent>* mouse = nullptr);
+
+    // Asks the console for mouse input (and turns off its Quick Edit mode,
+    // which would take the mouse for selecting text) until the Console is
+    // destroyed.
+    void enable_mouse();
 
     // Waits up to the given time for console input; true when some arrived.
     bool wait(int milliseconds);
@@ -61,6 +69,9 @@ private:
     void* buffer_;
     void* previous_;
     void* input_;
+    unsigned long input_mode_ = 0;
+    bool mouse_ = false;
+    int buttons_ = 0;
     int columns_ = 0;
     int rows_ = 0;
 };

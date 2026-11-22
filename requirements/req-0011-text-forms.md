@@ -90,6 +90,27 @@ taken from a reference program)
   the button's value (1 to 7); `InputBox` the text, or `""` for Cancel.
   When the keys end with a dialog open, the screen keeps showing it and
   it gives the answer of Esc (or of its default button).
+- **The mouse.** On the console the text host asks for mouse input (and
+  turns off Quick Edit while it runs). A button going down, going up, a
+  double click and a move become `MouseDown`, `MouseUp`, `DblClick` and
+  `MouseMove` of the window under the pointer (the one drawn last there),
+  with VB's button (1 left, 2 right, 4 middle) and shift (1, 2, 4) and
+  the middle of the cell in twips from the window's origin (a form's
+  client area); a release goes to the window the button went down on,
+  and a move is reported once a cell. A left button released over the
+  window it went down on clicks it (`Click`, which also gives it the
+  focus), except a double click. A list selects the item clicked (its
+  scroll bar's arrows the item before or after); a combo box opens or
+  closes its list, and an item of the open list is selected; a scroll bar
+  moves by `SmallChange` on its arrows and by `LargeChange` on its track;
+  a text box puts its caret at the character clicked. On the menus, a
+  title opens its menu and an item is chosen; on a dialog, a button
+  released over it is chosen. In a file of keys, a mouse record is the
+  bytes 0, 255, then the kind (`D` down, `U` up, `M` move, `2` double
+  click), the buttons, the row and the column.
+- **Building.** `wfc build` of a project with `WfcTextUI=1` writes a
+  console program (not a Windows one), which shows its forms on the text
+  screen as `wfc` does.
 - **The end.** The program ends when its last form is unloaded, as in VB6.
   When the keys come from the standard input and it has ended, the forms
   that are still loaded are closed, but the screen keeps showing them: its
@@ -97,17 +118,21 @@ taken from a reference program)
 
 ## Known limits
 
-Steps 1 to 4 of M3: a text box has one line (no `MultiLine`, no
+Steps 1 to 5 of M3: a text box has one line (no `MultiLine`, no
 `PasswordChar`, no selection); a combo box's text cannot be typed (every
 style chooses from its list); a list box selects one item (no
 `MultiSelect`, no `Columns`); menus show no shortcut text, and
-`PopupMenu` is not drawn; timers do not fire while a dialog is open;
-the mouse comes in step 5 (WFC ADR-0012).
+`PopupMenu` is not drawn; timers do not fire while a dialog is open; the
+mouse wheel and dragging (`DragMode`) are not used; a `.frm` whose
+container has `ScaleMode = 4` places its controls as if its numbers were
+twips (WFC ADR-0012).
 
 ## Verification
 
 **Method:** Test
 
-**References:** `TC-0012` (the drawing), `TC-0005` (`320-text-form`,
+**References:** `TC-0012` (the drawing), `TC-0013` (the mouse), `TC-0005` (`320-text-form`,
 `321-text-input`, `322-text-lists`, `323-text-combo-open`,
-`324-text-menus` and `325-text-msgbox` in WFC)
+`324-text-menus`, `325-text-msgbox` and `326-text-mouse` in WFC; in
+WFC also `TC-MP0007-package-320-text-form` and `...-326-text-mouse`,
+built with `wfc build`)

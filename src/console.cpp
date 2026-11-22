@@ -57,6 +57,9 @@ Console::Console(void* buffer, void* previous, void* input)
     : buffer_(buffer), previous_(previous), input_(input) {}
 
 Console::~Console() {
+    if (mouse_) {
+        SetConsoleMode(handle(input_), input_mode_);
+    }
     if (previous_ != nullptr) {
         SetConsoleActiveScreenBuffer(handle(previous_));
     }
@@ -115,7 +118,18 @@ void Console::present(const TextScreen& screen) {
     SetConsoleCursorInfo(out, &cursor);
 }
 
-int Console::poll(KeyBuffer& buffer) {
+void Console::enable_mouse() {
+    DWORD mode = 0;
+    if (mouse_ || input_ == nullptr || !GetConsoleMode(handle(input_), &mode)) {
+        return;
+    }
+    input_mode_ = mode;
+    mode |= ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS;
+    mode &= ~static_cast<DWORD>(ENABLE_QUICK_EDIT_MODE);
+    mouse_ = SetConsoleMode(handle(input_), mode) != FALSE;
+}
+
+int Console::poll(KeyBuffer& buffer, std::deque<MouseEvent>* mouse) {
     if (input_ == nullptr) {
         return 0;
     }
@@ -131,6 +145,33 @@ int Console::poll(KeyBuffer& buffer) {
         if (!ReadConsoleInputW(handle(input_), &record, 1, &read) ||
             read == 0) {
             break;
+        }
+        if (record.EventType == MOUSE_EVENT && mouse != nullptr) {
+            const MOUSE_EVENT_RECORD& event = record.Event.MouseEvent;
+            const DWORD held = event.dwButtonState;
+            const int buttons =
+                ((held & FROM_LEFT_1ST_BUTTON_PRESSED) != 0 ? kLeftButton : 0) |
+                ((held & RIGHTMOST_BUTTON_PRESSED) != 0 ? kRightButton : 0) |
+                ((held & FROM_LEFT_2ND_BUTTON_PRESSED) != 0 ? kMiddleButton
+                                                            : 0);
+            const DWORD flags = event.dwEventFlags;
+            if ((flags & (MOUSE_WHEELED | MOUSE_HWHEELED)) != 0) {
+                continue;
+            }
+            const DWORD state = event.dwControlKeyState;
+            for (MouseEvent change : mouse_changes(
+                     buttons_, buttons, (flags & MOUSE_MOVED) != 0,
+                     (flags & DOUBLE_CLICK) != 0, event.dwMousePosition.Y + 1,
+                     event.dwMousePosition.X + 1)) {
+                change.shift = (state & SHIFT_PRESSED) != 0;
+                change.control =
+                    (state & (LEFT_CTRL_PRESSED | RIGHT_CTRL_PRESSED)) != 0;
+                change.alt =
+                    (state & (LEFT_ALT_PRESSED | RIGHT_ALT_PRESSED)) != 0;
+                mouse->push_back(change);
+            }
+            buttons_ = buttons;
+            continue;
         }
         if (record.EventType != KEY_EVENT || !record.Event.KeyEvent.bKeyDown) {
             continue;

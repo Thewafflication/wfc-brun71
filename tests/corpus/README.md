@@ -10,7 +10,8 @@ line break is Enter, a 0 byte is followed by the scan code of an extended
 key) and the lines it reads with `INPUT`. A `NNN-name.vbp` beside it is a VB6
 project with `WfcTextUI=1` (WFC ADR-0012) that runs instead: its forms are
 shown on the screen and the keys drive them; the two bytes 0, 0 in its
-`.keys` file let its timers' clock move on to the next one that is due. A `.exitcode` file gives the exit
+`.keys` file let its timers' clock move on to the next one that is due,
+and the bytes 0, 255 begin a mouse record (kind, buttons, row, column). A `.exitcode` file gives the exit
 status the program must end with when it is not 0.
 
 WFC registers each program twice, `TC-MP0002-corpus-NNN-name` (interpreter)
@@ -39,4 +40,5 @@ and verifies `REQ-0004` to `REQ-0011` (see `requirements/`).
 | `323-text-combo-open` | the same form with the combo box's list left open over the other controls |
 | `324-text-menus` | a menu bar, Alt and a title's key, an `InputBox` edited, a `Shortcut` (Ctrl+N) with a `MsgBox` answered No, F10 and Right, a checked item, a menu in a menu, a disabled item |
 | `325-text-msgbox` | a `MsgBox` left open when the keys end: its lines, buttons and default button |
+| `326-text-mouse` | the mouse: a button, a check box, a text box's caret, a list item, a double click, the right button on the form (`MouseDown` in twips), a press released away from its button |
 | `320-text-form` | a VB6 form on the text screen: centred box, title, label, check box, buttons; Space, Enter on the `Default` button, Tab, Alt and an access key |

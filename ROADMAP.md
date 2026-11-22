@@ -74,18 +74,17 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
 - [x] Step 4: the menu bar and pull-down menus (access keys, F10, check
       marks, menus in menus, `Shortcut`), `MsgBox` and `InputBox` as text
       dialogs (`324-text-menus`, `325-text-msgbox`).
-- [ ] Modal forms and several forms at once checked in the corpus.
-- [ ] The event loop: keys and the console mouse become `KeyDown`,
-      `KeyPress`, `Click`, `GotFocus`, `LostFocus`, `Change`; `Timer`
-      controls; `DoEvents`.
-- [ ] Controls: `Label`, `TextBox`, `CommandButton`, `CheckBox`,
-      `OptionButton`, `Frame`, `ListBox`, `ComboBox`, `Timer`, scroll bars.
-- [ ] Menus from the form's `Menu` editor entries, as a pull-down menu bar
-      with Alt and shortcut keys.
-- [ ] `MsgBox` and `InputBox` as text dialogs.
-- [ ] WFC runs such a project in the interpreter and as native code;
+- [x] Step 5: the console mouse (`mouse.hpp`; REQ-0011, TC-0013,
+      `326-text-mouse`); `wfc build` writes a console program for a text
+      form project (`TC-MP0007-package-320-text-form`).
+- [x] WFC runs such a project in the interpreter and as native code;
       corpus programs drive it with `.keys` files and check the final
       screen.
+- [ ] Modal forms, several forms at once and `DoEvents` checked in the
+      corpus.
+- [ ] A `.frm` in `ScaleMode = 4` (positions in characters) placed as
+      VB6 places it.
+- [ ] Tried by hand in a live console (keys, mouse, Quick Edit).
 
 ## Later
 
@@ -108,5 +107,5 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
 - [x] WSP 1.4.0 as a submodule (`wsp/`), adoption record in
       [docs/WSP-ADOPTION.md](docs/WSP-ADOPTION.md).
 - [x] Requirements `REQ-0001` to `REQ-0011`, test cases `TC-0001` to
-      `TC-0012`, traceability checked in the lint stage.
+      `TC-0013`, traceability checked in the lint stage.
 - [ ] Commit-checks record, static analysis, release records.

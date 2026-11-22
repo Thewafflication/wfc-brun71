@@ -43,10 +43,11 @@ wfc game.bas < keys.txt   INKEY$ and INPUT read the keys from the file
 wfc game.bas > out.txt    prints the text of the final screen
 ```
 
-`tests/corpus` has the PDS programs WFC and this repository's `TC-0005` run. Next come VB6 forms in text mode: VB6
-programs with an event-driven text user interface (forms, controls, menus,
-the mouse) on the same screen. A clone of the PDS 7.1 User Interface Toolbox
-comes later.
+`tests/corpus` has the PDS programs WFC and this repository's `TC-0005` run. WFC also
+shows VB6 forms on this screen (a `.vbp` with `WfcTextUI=1`): an
+event-driven text user interface of forms, controls, menus, dialogs and the
+mouse, drawn with `forms.hpp` (WFC ADR-0012). A clone of the PDS 7.1 User
+Interface Toolbox comes later.
 
 ## Building on its own
 

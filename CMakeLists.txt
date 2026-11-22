@@ -4,9 +4,9 @@
 # (src/keyboard.cpp), code page 437 (src/cp437.cpp), the line editor of INPUT
 # (src/input.cpp), PRINT USING (src/using.cpp), SOUND and PLAY
 # (src/sound.cpp), the soft keys (src/keyline.cpp), key trapping
-# (src/keytrap.cpp), the drawing of text windows (src/forms.cpp) and, on
-# Windows, the console host that shows the screen and reads the keys
-# (src/console.cpp).
+# (src/keytrap.cpp), the drawing of text windows (src/forms.cpp), the mouse
+# (src/mouse.cpp) and, on Windows, the console host that shows the screen
+# and reads the keys (src/console.cpp).
 # The library is static; the version is the one in VERSION.
 #
 # Parent project functions used when present: wfc_enable_strict_warnings and
@@ -64,6 +64,7 @@ add_library(
   src/keyline.cpp
   src/keytrap.cpp
   src/forms.cpp
+  src/mouse.cpp
 )
 if(WIN32)
   target_sources(wfc_brun71 PRIVATE src/console.cpp)
@@ -96,6 +97,7 @@ if(BUILD_TESTING AND WFC_BUILD_TESTS)
   wfc_brun71_test(TC-0010 keytrap tests/keytrap_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0011 error tests/error_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0012 forms tests/forms_test.cpp "unit;brun71")
+  wfc_brun71_test(TC-0013 mouse tests/mouse_test.cpp "unit;brun71")
   if(WIN32)
     wfc_brun71_test(TC-0004 console tests/console_test.cpp "integration;brun71")
   endif()

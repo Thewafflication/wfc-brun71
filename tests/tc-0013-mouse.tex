@@ -1,0 +1,49 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0013}
+\def\TCTitle{The mouse}
+\def\TCPurpose{Verify the events of the mouse: the buttons that go down
+and up between two reports of the console, double clicks, moves, and the
+mouse records of a file of keys.}
+\def\TCPriority{\TCPriorityMedium}
+
+\def\TCRequirementRef{REQ-0011}
+\def\TCDesignRef{WFC \texttt{architecture/adr-0012-text-mode-forms.md}.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/mouse.hpp};
+\texttt{tests/mouse\_test.cpp}.}
+\def\TCTestTechnique{Equivalence classes of the button changes (one down,
+one up, several at once, none) and of the records (each kind, a bad kind, a
+row of 0, a short record).}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_mouse\_test} exists.}
+\def\TCEnvironment{Any supported target. CTest runs the program with a 60
+second timeout.}
+\def\TCAssumptions{The buttons are VB's (1 left, 2 right, 4 middle); the
+order of several changes in one report (left, right, middle) is this
+project's own.}
+
+\def\TCInputData{Button states 0, 1, 2, 3 and 4, with and without a move or
+a double click; the records \texttt{D 1 5 10}, \texttt{U}, \texttt{M},
+\texttt{2}, \texttt{X}, a row of 0 and a record of three bytes.}
+\def\TCInitialState{None.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_mouse\_test} (CTest \texttt{TC-0013-mouse}, in
+    WFC \texttt{wfc-brun71-TC-0013-mouse}).
+  \item Compare each list of events and each record with the expected one.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{mouse: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}
