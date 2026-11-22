@@ -31,13 +31,14 @@ A checked item is present, tested and passing; an unchecked one is planned.
       `PRINT` on the screen once it has started; live in the console, or
       the final screen as text when the output is redirected; keys from the
       console or the standard input (REQ-0004, TC-0005).
-- [ ] `SCREEN(row, col)` (the name is VB6's `Screen` object in WFC);
-      `ERROR$` with the PDS texts.
+- [x] `SCREEN(row, col [, flag])` with its parentheses (`Screen` alone stays
+      VB6's object); BRUN71's messages for an error no handler takes
+      (REQ-0010, TC-0011).
 - [x] `INPUT`, `LINE INPUT` from the keyboard and the line editor they use
       (`input.hpp`), "Redo from start"; `INPUT$(n)` (REQ-0005, TC-0006).
 - [x] `PRINT USING` and `PRINT #n, USING` (`using.hpp`; REQ-0006,
       TC-0007).
-- [ ] `WRITE` to the screen.
+- [x] `WRITE` to the screen and the plain output (REQ-0010).
 - [x] `BEEP`, `SOUND`, `PLAY` (`sound.hpp`), `SLEEP` (REQ-0007, TC-0008);
       `KEY n`, `KEY ON/OFF/LIST` and the soft-key line (`keyline.hpp`;
       REQ-0008, TC-0009).
@@ -76,6 +77,6 @@ screen:
 
 - [x] WSP 1.4.0 as a submodule (`wsp/`), adoption record in
       [docs/WSP-ADOPTION.md](docs/WSP-ADOPTION.md).
-- [x] Requirements `REQ-0001` to `REQ-0009`, test cases `TC-0001` to
-      `TC-0010`, traceability checked in the lint stage.
+- [x] Requirements `REQ-0001` to `REQ-0010`, test cases `TC-0001` to
+      `TC-0011`, traceability checked in the lint stage.
 - [ ] Commit-checks record, static analysis, release records.

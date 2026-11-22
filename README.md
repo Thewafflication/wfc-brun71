@@ -27,9 +27,9 @@ program on a PC text screen, running in a Windows console.
 - `include/wfc/brun71/cp437.hpp` code page 437 to Unicode and back.
 - `include/wfc/brun71/console.hpp` the Windows console host: shows a screen in
   a console screen buffer of its own and reads keys into the buffer.
-- `include/wfc/brun71/error.hpp` the BASIC errors the runtime raises
-  (error 5, "Illegal function call", for an argument out of range; 13 and
-  62).
+- `include/wfc/brun71/error.hpp` the BASIC run-time errors and BRUN71's
+  messages for them (the runtime raises 5, "Illegal function call", for an
+  argument out of range; 13 and 62).
 
 Target: `wfc_brun71` (static library, `wfcbrun71_static.lib`).
 

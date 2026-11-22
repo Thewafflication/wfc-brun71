@@ -7,14 +7,15 @@ that uses the text screen prints, after any plain output, the text of its
 final screen (rows 1 to the last one that is not blank). A `.keys` file is the
 program's standard input: the keys it reads with `INKEY$` (each byte a key, a
 line break is Enter, a 0 byte is followed by the scan code of an extended
-key) and the lines it reads with `INPUT`.
+key) and the lines it reads with `INPUT`. A `.exitcode` file gives the exit
+status the program must end with when it is not 0.
 
 WFC registers each program twice, `TC-MP0002-corpus-NNN-name` (interpreter)
 and `TC-MP0002-corpus-NNN-name-native`. This repository runs them as
 `TC-0005-NNN-name` and `TC-0005-NNN-name-native` when CMake is given
 `-DWFC_EXECUTABLE=<wfc.exe>` (`run_corpus_case.cmake` is the runner); without
 it they are skipped. The case is specified in `tests/tc-0005-pds-programs.tex`
-and verifies `REQ-0004` to `REQ-0009` (see `requirements/`).
+and verifies `REQ-0004` to `REQ-0010` (see `requirements/`).
 
 | Program | What it checks |
 | --- | --- |
@@ -28,3 +29,5 @@ and verifies `REQ-0004` to `REQ-0009` (see `requirements/`).
 | `307-pds-sound-keys` | `SOUND`, `PLAY`, `BEEP`, `SLEEP` ended by a key, `KEY n`, `KEY ON`, `KEY LIST`, the key line after `CLS 0`, errors 5 and 13 |
 | `308-pds-sleep-api` | a VB6 module that declares the Windows `Sleep` keeps calling it |
 | `309-pds-on-key` | `ON KEY(n) GOSUB`, `KEY(n) ON/STOP/OFF`, a user-defined key, a handler inside a handler, errors 5 |
+| `310-pds-write-screen` | `WRITE` to the plain output and the screen, `SCREEN(row, col [, flag])`, error 5 |
+| `311-pds-error-exit` | an error no handler takes: BRUN71's message on the screen, exit status 1 (`311-pds-error-exit.exitcode`) |

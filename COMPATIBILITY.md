@@ -21,12 +21,13 @@ manuals do not say.
 | `PRINT` (layout) | done, in WFC | WFC formats the numbers (VB6 rules: a sign place and a trailing space) |
 | `TAB(n)`, `SPC(n)` | done, in WFC | |
 | `CSRLIN`, `POS(0)` | done, in WFC | |
-| `SCREEN(row, col [, flag])` | library only | WFC: the name is the VB6 `Screen` object |
+| `SCREEN(row, col [, flag])` | done, in WFC | with its parentheses; `Screen` alone is the VB6 object |
 | `INKEY$` | done, in WFC | from the console, or the standard input when the output is redirected |
 | `INPUT`, `LINE INPUT` | done, in WFC | the line editor: characters, Backspace, Esc, Enter |
 | `INPUT$(n)` | done, in WFC | from the keyboard; `INPUT$(n, #f)` reads a file as in VB6 |
 | `PRINT USING`, `PRINT #n, USING` | done, in WFC | |
-| `WRITE` to the screen | planned | M2 |
+| `WRITE` to the screen | done, in WFC | |
+| Run-time error messages | done, in WFC | an error no handler takes shows BRUN71's message |
 | `BEEP`, `SOUND`, `PLAY`, `SLEEP` | done, in WFC | heard on the console's speaker when the screen is shown there |
 | `KEY n`, `KEY ON`, `KEY OFF`, `KEY LIST` | done, in WFC | |
 | `KEY(n) ON/OFF/STOP`, `ON KEY(n) GOSUB` | done, in WFC | interpreted only; checked at the module level |
@@ -64,6 +65,7 @@ manuals do not say.
 | `SLEEP` ends at once when a key is already waiting; the key stays for `INKEY$` | assumed |
 | A compiled program starts with empty soft-key texts | assumed |
 | A trap with `KEY(n) ON` but no `ON KEY(n) GOSUB` leaves the key to the program | assumed |
+| `WRITE` writes numbers without the 0 before the point (`.25`) | documented |
 | A trapped key ends `SLEEP` | documented |
 | User-defined trap keys are matched by the character their scan code types on a US keyboard (letters, digits, Space, Enter, Esc, Tab, Backspace); Alt and extended keys by the scan code | assumed (BRUN71 reads the scan code from the keyboard) |
 | The soft-key line: 8 columns a key, the number in normal video, 6 characters (5 for key 10) in reverse video; keys 11 and 12 are not shown | assumed |
@@ -71,9 +73,16 @@ manuals do not say.
 
 ## WFC differences
 
-- `ERROR$(5)` gives Visual Basic's "Invalid procedure call or argument"; the
-  error raised by the screen carries "Illegal function call" as its
-  description.
+- `Err.Description` and `Error$(n)` keep Visual Basic's messages (for
+  example "Invalid procedure call or argument" for 5), except for the errors
+  the screen statements raise, which carry BRUN71's ("Illegal function
+  call"). An error no handler takes is reported with BRUN71's message.
+- An error no handler takes shows only its message on the screen; BRUN71
+  adds the module and address ("... in module X at address ...") and waits
+  for a key ("Hit any key to return to system").
+- `WRITE` of a Boolean writes `#TRUE#` or `#FALSE#` and doubles quotes in a
+  string, as Visual Basic's `Write #` does; BASIC has no Booleans and writes
+  a string's quotes as they are.
 - `LOCATE (5), 1` (a first argument in parentheses) is read as an array
   element, as in Visual Basic, not as the statement.
 - A program that has its own `Sub Locate` (or `Cls`, `Color`, `Width`) keeps

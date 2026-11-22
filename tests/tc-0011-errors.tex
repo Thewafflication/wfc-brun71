@@ -1,0 +1,49 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0011}
+\def\TCTitle{Run-time error messages}
+\def\TCPurpose{Verify the messages of the BASIC run-time errors, the numbers
+BASIC does not define, and the message an error raised by the runtime
+carries.}
+\def\TCPriority{\TCPriorityMedium}
+
+\def\TCRequirementRef{REQ-0010}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/error.hpp};
+\texttt{tests/error\_test.cpp}.}
+\def\TCTestTechnique{Sampling of the error table, including the messages
+that differ from Visual Basic's; boundary values (0, 1, 77, a large
+number).}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_error\_test} exists.}
+\def\TCEnvironment{Any supported target. CTest runs the program with a 60
+second timeout.}
+\def\TCAssumptions{The messages of the PDS 7.1 list of run-time error codes
+(REQ-0010).}
+
+\def\TCInputData{Error numbers 0, 1, 3, 5, 8, 11, 13, 16, 52, 62, 75, 76, 77
+and 1000.}
+\def\TCInitialState{None.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_error\_test} (CTest \texttt{TC-0011-error}, in
+    WFC \texttt{wfc-brun71-TC-0011-error}).
+  \item Compare each message with the expected one, and check that the
+    numbers BASIC does not define have none.
+  \item Check the number and the message of a raised error.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{errors: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

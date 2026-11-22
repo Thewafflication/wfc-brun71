@@ -16,7 +16,7 @@ VB6 modules that use the same words as names.}
 \def\TCPriority{\TCPriorityHigh}
 
 \def\TCRequirementRef{REQ-0004, REQ-0005, REQ-0006, REQ-0007, REQ-0008,
-REQ-0009}
+REQ-0009, REQ-0010}
 \def\TCDesignRef{WFC \texttt{architecture/adr-0011-pds-text-programs.md}.}
 \def\TCFeatureRef{\texttt{tests/corpus/*.bas}; in WFC
 \texttt{src/interpreter/pds\_screen.cpp},
@@ -40,8 +40,9 @@ not taken from BRUN71 itself.}
 \texttt{302-pds-errors}, \texttt{303-pds-names}, \texttt{304-pds-scroll},
 \texttt{305-pds-input} (with \texttt{305-pds-input.keys}),
 \texttt{306-pds-using}, \texttt{307-pds-sound-keys} (with
-\texttt{307-pds-sound-keys.keys}), \texttt{308-pds-sleep-api} and
-\texttt{309-pds-on-key} (with \texttt{309-pds-on-key.keys}).}
+\texttt{307-pds-sound-keys.keys}), \texttt{308-pds-sleep-api},
+\texttt{309-pds-on-key} (with \texttt{309-pds-on-key.keys}),
+\texttt{310-pds-write-screen} and \texttt{311-pds-error-exit}.}
 \def\TCInitialState{None.}
 
 \def\TCProcedure{\begin{enumerate}
@@ -51,8 +52,9 @@ not taken from BRUN71 itself.}
   \item Compare the standard output with \texttt{NNN-name.expected}, ignoring
     the line ending and the blanks around the whole text.
 \end{enumerate}}
-\def\TCExpectedResult{Every program exits with status 0 and prints exactly
-its expected text in both modes.}
+\def\TCExpectedResult{Every program exits with status 0 (or the status of
+its \texttt{.exitcode} file, 1 for \texttt{311-pds-error-exit}) and prints
+exactly its expected text in both modes.}
 \def\TCPostConditions{\texttt{303-pds-names} and \texttt{306-pds-using}
 delete the files they write.}
 
