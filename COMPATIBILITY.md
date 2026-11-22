@@ -23,8 +23,10 @@ manuals do not say.
 | `CSRLIN`, `POS(0)` | done, in WFC | |
 | `SCREEN(row, col [, flag])` | library only | WFC: the name is the VB6 `Screen` object |
 | `INKEY$` | done, in WFC | from the console, or the standard input when the output is redirected |
-| `PRINT USING`, `WRITE`, number format | planned | M2 |
-| `INPUT`, `LINE INPUT`, `INPUT$` | planned | M2 |
+| `INPUT`, `LINE INPUT` | done, in WFC | the line editor: characters, Backspace, Esc, Enter |
+| `INPUT$(n)` | done, in WFC | from the keyboard; `INPUT$(n, #f)` reads a file as in VB6 |
+| `PRINT USING`, `PRINT #n, USING` | done, in WFC | |
+| `WRITE` to the screen | planned | M2 |
 | `BEEP`, `SOUND`, `PLAY`, `SLEEP` | planned | M2; `CHR$(7)` already calls the host's bell |
 | `KEY` (soft keys, `ON KEY`) | planned | M2 |
 | `SCREEN n` (graphics) | planned | later |
@@ -46,6 +48,17 @@ manuals do not say.
 | The cursor is hidden until `LOCATE , , 1`; its default shape is scan lines 6-7 | assumed |
 | `LOCATE , , , start` sets `stop` to `start` | documented |
 | The grey cursor keys give the same codes as the keypad ones | assumed (the BIOS gives `E0h` prefixes; `INKEY$` reports `CHR$(0)`) |
+| `INPUT` adds "? " after a prompt followed by `;` and when there is no prompt, none after a prompt followed by `,`; `LINE INPUT` never adds it | documented |
+| The INPUT line editor takes characters from 32 up, at most 255; Backspace erases the last one (also across a wrapped line), Esc the whole line; the cursor keys, Tab and the other control keys do nothing | assumed (BRUN71 also edits with the cursor keys, Ins and Del) |
+| `INPUT` asks again ("Redo from start" on a line of its own) when the number of fields is wrong, a numeric field is not a number or is out of the variable's range, a numeric field is quoted, or text follows a closing quote | documented ("Redo from start"); assumed (which cases) |
+| An empty `INPUT` line gives every variable 0 or "" | assumed |
+| Unquoted INPUT fields lose their surrounding blanks; quoted ones keep everything between the quotes; `LINE INPUT` keeps the whole line | documented |
+| A numeric INPUT field takes a sign, decimals, an `E` or `D` exponent, `&H` and `&O` digits and one type suffix | assumed |
+| `PRINT USING` rounds halves away from zero | assumed |
+| `PRINT USING` without a sign field puts the minus of a negative number before the `$` of `$$`; it drops the 0 before the point when there is no room for it | assumed |
+| A `PRINT USING` exponent field keeps one position for the sign when it has no sign field | documented (the manual's examples) |
+| After the last value `PRINT USING` prints the format's text up to the next field | assumed |
+| `PRINT USING` with a format that has no field is error 5; a string in a numeric field, or a number in a string field, error 13 | documented |
 
 ## WFC differences
 
@@ -57,6 +70,12 @@ manuals do not say.
 - A program that has its own `Sub Locate` (or `Cls`, `Color`, `Width`) keeps
   calling it in the interpreter; compiled to native code it gets the
   statement.
+- A variable without a type suffix or `DEF` type is a Variant in WFC, not a
+  single-precision number: `INPUT n` stores a number when the field is one
+  and the text otherwise, instead of asking again.
+- An INPUT field typed into a `Currency` or `Decimal` variable is converted
+  as Visual Basic converts a number; one out of range raises error 6 instead
+  of asking again.
 
 ## Host differences
 

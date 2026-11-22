@@ -33,9 +33,11 @@ A checked item is present, tested and passing; an unchecked one is planned.
       console or the standard input (REQ-0004, TC-0005).
 - [ ] `SCREEN(row, col)` (the name is VB6's `Screen` object in WFC);
       `ERROR$` with the PDS texts.
-- [ ] `PRINT` of numbers in the PDS format (a leading sign place and a
-      trailing space), `PRINT USING`, `WRITE`.
-- [ ] `INPUT`, `LINE INPUT` and the line editor they use; `INPUT$`.
+- [x] `INPUT`, `LINE INPUT` from the keyboard and the line editor they use
+      (`input.hpp`), "Redo from start"; `INPUT$(n)` (REQ-0005, TC-0006).
+- [x] `PRINT USING` and `PRINT #n, USING` (`using.hpp`; REQ-0006,
+      TC-0007).
+- [ ] `WRITE` to the screen.
 - [ ] `BEEP`, `SOUND`, `PLAY`; `SLEEP`; `KEY ON/OFF/LIST` and the soft-key
       line; `ON KEY(n) GOSUB` and `KEY(n) ON/OFF/STOP`.
 - [x] Corpus programs in `tests/corpus`, run by WFC in the interpreter and
@@ -71,6 +73,6 @@ screen:
 
 - [x] WSP 1.4.0 as a submodule (`wsp/`), adoption record in
       [docs/WSP-ADOPTION.md](docs/WSP-ADOPTION.md).
-- [x] Requirements `REQ-0001` to `REQ-0003`, test cases `TC-0001` to
-      `TC-0004`, traceability checked in the lint stage.
+- [x] Requirements `REQ-0001` to `REQ-0006`, test cases `TC-0001` to
+      `TC-0007`, traceability checked in the lint stage.
 - [ ] Commit-checks record, static analysis, release records.

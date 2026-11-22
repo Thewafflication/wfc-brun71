@@ -1,0 +1,50 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0006}
+\def\TCTitle{INPUT line editor and fields}
+\def\TCPurpose{Verify the line editor of INPUT and LINE INPUT (typing,
+Backspace, Esc, Enter, wrapping, the 255-character limit), how INPUT splits
+its line into fields and which fields are numbers.}
+\def\TCPriority{\TCPriorityHigh}
+
+\def\TCRequirementRef{REQ-0005}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/input.hpp};
+\texttt{src/input.cpp}; \texttt{tests/input\_test.cpp}.}
+\def\TCTestTechnique{Scenario tests of key sequences on a screen; equivalence
+classes and boundary values of fields and numbers.}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_input\_test} exists.}
+\def\TCEnvironment{Any supported target; no console is used. CTest runs the
+program with a 60 second timeout.}
+\def\TCAssumptions{The editing keys and field rules of REQ-0005, not taken
+from BRUN71 itself.}
+
+\def\TCInputData{Key sequences (characters, Backspace, Esc, Tab, an extended
+key, Enter) typed at row 3 column 5 and at the end of row 2; 300 characters;
+INPUT lines with blanks, quotes and commas; numeric fields in decimal,
+exponent, hexadecimal and octal spellings and invalid ones.}
+\def\TCInitialState{A new 80 by 25 screen.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_input\_test} (CTest \texttt{TC-0006-input}, in
+    WFC \texttt{wfc-brun71-TC-0006-input}).
+  \item Check the text kept, the cells shown and the cursor after each key.
+  \item Check Backspace across a wrapped line and the length limit.
+  \item Check the fields of each line and the value of each numeric field.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{input: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

@@ -11,6 +11,8 @@ namespace.
 | [REQ-0002](req-0002-keyboard.md) | Keyboard and `INKEY$` | `TC-0002` |
 | [REQ-0003](req-0003-console-host.md) | Code page 437 and the Windows console host | `TC-0003`, `TC-0004` |
 | [REQ-0004](req-0004-pds-programs.md) | PDS programs run in WFC | `TC-0005` |
+| [REQ-0005](req-0005-input.md) | `INPUT`, `LINE INPUT` and `INPUT$` | `TC-0006`, `TC-0005` |
+| [REQ-0006](req-0006-print-using.md) | `PRINT USING` | `TC-0007`, `TC-0005` |
 
 The test case specifications are `tests/tc-NNNN-<title>.tex`; the CTest names
 are `TC-NNNN-<name>`; `tests/run-tc-NNNN.ps1` runs one test case (checked by

@@ -14,11 +14,16 @@ program on a PC text screen, running in a Windows console.
   returns (a character, or `CHR$(0)` and the BIOS scan code of an extended
   key, with the Shift, Ctrl and Alt codes), the 15-key type-ahead buffer, and
   the translation of Windows key presses.
+- `include/wfc/brun71/input.hpp` the line editor of `INPUT` and
+  `LINE INPUT`, and how `INPUT` splits its line into fields and numbers.
+- `include/wfc/brun71/using.hpp` `PRINT USING`: numbers and strings
+  formatted by the fields of a format string.
 - `include/wfc/brun71/cp437.hpp` code page 437 to Unicode and back.
 - `include/wfc/brun71/console.hpp` the Windows console host: shows a screen in
   a console screen buffer of its own and reads keys into the buffer.
 - `include/wfc/brun71/error.hpp` the BASIC errors the runtime raises
-  (error 5, "Illegal function call", for an argument out of range).
+  (error 5, "Illegal function call", for an argument out of range; 13 and
+  62).
 
 Target: `wfc_brun71` (static library, `wfcbrun71_static.lib`).
 
@@ -28,7 +33,7 @@ as native code (WFC ADR-0011):
 
 ```
 wfc game.bas              shows the screen live in the console
-wfc game.bas < keys.txt   INKEY$ reads the keys from the file
+wfc game.bas < keys.txt   INKEY$ and INPUT read the keys from the file
 wfc game.bas > out.txt    prints the text of the final screen
 ```
 

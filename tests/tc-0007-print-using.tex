@@ -1,0 +1,50 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+
+% Compile from the repository root so this path resolves to the pinned WSP
+% submodule.
+\input{wsp/testing/test-case-library.tex}
+
+\begin{document}
+\def\TCID{TC-0007}
+\def\TCTitle{PRINT USING}
+\def\TCPurpose{Verify the text PRINT USING makes of numbers and strings:
+digit, decimal and thousands fields, signs, asterisk and dollar fills,
+exponents, overflow, string fields, literals, a format used again for more
+values, and errors 5 and 13.}
+\def\TCPriority{\TCPriorityHigh}
+
+\def\TCRequirementRef{REQ-0006}
+\def\TCDesignRef{Not applicable.}
+\def\TCFeatureRef{\texttt{include/wfc/brun71/using.hpp};
+\texttt{src/using.cpp}; \texttt{tests/using\_test.cpp}.}
+\def\TCTestTechnique{Equivalence classes of the field kinds; boundary values
+(rounding halves, a carry into one more digit, a number one digit too wide,
+zero, an empty string).}
+
+\def\TCPreconditions{The library is built and the test program
+\texttt{brun71\_using\_test} exists.}
+\def\TCEnvironment{Any supported target. CTest runs the program with a 60
+second timeout.}
+\def\TCAssumptions{The expected texts follow REQ-0006 and the examples of the
+BASIC manuals; they were not taken from BRUN71 itself.}
+
+\def\TCInputData{Formats and value lists of each field kind; formats without
+a field; a string for a numeric field and a number for a string field.}
+\def\TCInitialState{None.}
+
+\def\TCProcedure{\begin{enumerate}
+  \item Run \texttt{brun71\_using\_test} (CTest \texttt{TC-0007-using}, in
+    WFC \texttt{wfc-brun71-TC-0007-using}).
+  \item Compare the text of each format and value list with the expected
+    text.
+  \item Check that the wrong formats and values raise errors 5 and 13.
+\end{enumerate}}
+\def\TCExpectedResult{The program exits with status 0 and prints
+\texttt{print using: ok}; no \texttt{FAIL} line is written.}
+\def\TCPostConditions{None; the test writes no files.}
+
+\TCTemplate
+
+\end{document}

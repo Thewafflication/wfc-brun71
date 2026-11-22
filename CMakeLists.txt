@@ -1,8 +1,9 @@
 # wfc-brun71: the BASIC PDS 7.1 text-mode runtime (BRUN71) for WFC.
 #
 # The text screen of SCREEN 0 (src/screen.cpp), the keyboard of INKEY$
-# (src/keyboard.cpp), code page 437 (src/cp437.cpp) and, on Windows, the
-# console host that shows the screen and reads the keys (src/console.cpp).
+# (src/keyboard.cpp), code page 437 (src/cp437.cpp), the line editor of INPUT
+# (src/input.cpp), PRINT USING (src/using.cpp) and, on Windows, the console
+# host that shows the screen and reads the keys (src/console.cpp).
 # The library is static; the version is the one in VERSION.
 #
 # Parent project functions used when present: wfc_enable_strict_warnings and
@@ -48,7 +49,15 @@ set(
   "wfcbrun71 version"
 )
 
-add_library(wfc_brun71 STATIC src/screen.cpp src/keyboard.cpp src/cp437.cpp)
+add_library(
+  wfc_brun71
+  STATIC
+  src/screen.cpp
+  src/keyboard.cpp
+  src/cp437.cpp
+  src/input.cpp
+  src/using.cpp
+)
 if(WIN32)
   target_sources(wfc_brun71 PRIVATE src/console.cpp)
   # Users of the library test this before they use console.hpp.
@@ -73,6 +82,8 @@ if(BUILD_TESTING AND WFC_BUILD_TESTS)
   wfc_brun71_test(TC-0001 screen tests/screen_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0002 keyboard tests/keyboard_test.cpp "unit;brun71")
   wfc_brun71_test(TC-0003 cp437 tests/cp437_test.cpp "unit;brun71")
+  wfc_brun71_test(TC-0006 input tests/input_test.cpp "unit;brun71")
+  wfc_brun71_test(TC-0007 using tests/using_test.cpp "unit;brun71")
   if(WIN32)
     wfc_brun71_test(TC-0004 console tests/console_test.cpp "integration;brun71")
   endif()
