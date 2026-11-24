@@ -1,0 +1,7 @@
+Type=Exe
+Module=Answers; 327-text-forms.bas
+Form=327-text-forms.frm
+Form=327-text-forms-name.frm
+Form=327-text-forms-tools.frm
+Startup="Form1"
+WfcTextUI=1

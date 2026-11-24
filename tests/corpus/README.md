@@ -41,4 +41,5 @@ and verifies `REQ-0004` to `REQ-0011` (see `requirements/`).
 | `324-text-menus` | a menu bar, Alt and a title's key, an `InputBox` edited, a `Shortcut` (Ctrl+N) with a `MsgBox` answered No, F10 and Right, a checked item, a menu in a menu, a disabled item |
 | `325-text-msgbox` | a `MsgBox` left open when the keys end: its lines, buttons and default button |
 | `326-text-mouse` | the mouse: a button, a check box, a text box's caret, a list item, a double click, the right button on the form (`MouseDown` in twips), a press released away from its button |
+| `327-text-forms` | three forms: a modal one whose answer comes back (Ctrl+F6 and a click on the main form ignored while it runs), a modeless one that becomes active, Ctrl+F6, the focus back after a form closes, a `DoEvents` loop stopped from the other form |
 | `320-text-form` | a VB6 form on the text screen: centred box, title, label, check box, buttons; Space, Enter on the `Default` button, Tab, Alt and an access key |

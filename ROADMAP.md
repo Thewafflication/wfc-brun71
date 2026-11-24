@@ -80,8 +80,9 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
 - [x] WFC runs such a project in the interpreter and as native code;
       corpus programs drive it with `.keys` files and check the final
       screen.
-- [ ] Modal forms, several forms at once and `DoEvents` checked in the
-      corpus.
+- [x] Modal forms (other forms take no input), several forms (Ctrl+F6,
+      a click, the focus back when one closes) and `DoEvents`
+      (`327-text-forms`).
 - [x] Checked in a live console window (conhost) with input written by a
       test driver: drawing and colours, keys, the mouse, real-time timers,
       Quick Edit off while running and the console restored after; a fast

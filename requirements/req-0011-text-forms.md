@@ -113,6 +113,17 @@ taken from a reference program)
 - **Building.** `wfc build` of a project with `WfcTextUI=1` writes a
   console program (not a Windows one), which shows its forms on the text
   screen as `wfc` does.
+- **Several forms.** A form that is shown becomes the active one (the
+  focus goes to its first tab stop); Ctrl+F6 makes the next visible form
+  the active one, and so does a click on it. When the active form is
+  unloaded or hidden, the form on top gets the focus back on the control
+  that had it last. While a form shown with `Show vbModal` runs, input
+  to every other form (keys, clicks, Ctrl+F6, closing) is ignored; the
+  form model does this for every host.
+- **`DoEvents`** handles the waiting keys, mouse events and timers and
+  returns. When the keys come from the standard input and end during
+  `DoEvents`, the program goes on and the screen with it; the screen
+  stays as it is once the program next waits for input.
 - **The end.** The program ends when its last form is unloaded, as in VB6.
   When the keys come from the standard input and it has ended, the forms
   that are still loaded are closed, but the screen keeps showing them: its
@@ -133,6 +144,7 @@ mouse wheel and dragging (`DragMode`) are not used (WFC ADR-0012).
 
 **References:** `TC-0012` (the drawing), `TC-0013` (the mouse), `TC-0005` (`320-text-form`,
 `321-text-input`, `322-text-lists`, `323-text-combo-open`,
-`324-text-menus`, `325-text-msgbox` and `326-text-mouse` in WFC; in
+`324-text-menus`, `325-text-msgbox`, `326-text-mouse` and
+`327-text-forms` in WFC; in
 WFC also `TC-MP0007-package-320-text-form` and `...-326-text-mouse`,
 built with `wfc build`)
