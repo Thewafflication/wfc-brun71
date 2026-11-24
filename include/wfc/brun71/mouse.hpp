@@ -4,6 +4,7 @@
 // turns two such reports into the events a program sees.
 #pragma once
 
+#include <cstdint>
 #include <optional>
 #include <string_view>
 #include <vector>
@@ -14,6 +15,11 @@ namespace wfc::brun71 {
 inline constexpr int kLeftButton = 1;
 inline constexpr int kRightButton = 2;
 inline constexpr int kMiddleButton = 4;
+
+// The scan code of the key that stands for a mouse event among the keys
+// (the key 0, 255): it keeps the event in its place, before the keys typed
+// after it.
+inline constexpr std::uint8_t kMouseKey = 255;
 
 struct MouseEvent {
     enum class Kind { down, up, move, double_click };

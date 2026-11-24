@@ -35,8 +35,9 @@ public:
 
     // Moves the keys waiting in the console input into the buffer; a key
     // that does not fit is lost and the console beeps. With `mouse`, the
-    // mouse events go there (see enable_mouse). Returns how many keys were
-    // added.
+    // mouse events go there (see enable_mouse), each with the key 0,
+    // kMouseKey in the buffer at its place among the keys; moves in a row
+    // become one. Returns how many keys were added.
     int poll(KeyBuffer& buffer, std::deque<MouseEvent>* mouse = nullptr);
 
     // Asks the console for mouse input (and turns off its Quick Edit mode,

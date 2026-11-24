@@ -168,7 +168,17 @@ int Console::poll(KeyBuffer& buffer, std::deque<MouseEvent>* mouse) {
                     (state & (LEFT_CTRL_PRESSED | RIGHT_CTRL_PRESSED)) != 0;
                 change.alt =
                     (state & (LEFT_ALT_PRESSED | RIGHT_ALT_PRESSED)) != 0;
-                mouse->push_back(change);
+                // Moves in a row are one move: the last place counts.
+                if (change.kind == MouseEvent::Kind::move && !mouse->empty() &&
+                    mouse->back().kind == MouseEvent::Kind::move) {
+                    mouse->back() = change;
+                    continue;
+                }
+                // The key 0, 255 holds the event's place among the keys; an
+                // event that finds the buffer full is lost.
+                if (buffer.push(Key{0, kMouseKey})) {
+                    mouse->push_back(change);
+                }
             }
             buttons_ = buttons;
             continue;

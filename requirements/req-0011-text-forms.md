@@ -91,23 +91,25 @@ taken from a reference program)
   When the keys end with a dialog open, the screen keeps showing it and
   it gives the answer of Esc (or of its default button).
 - **The mouse.** On the console the text host asks for mouse input (and
-  turns off Quick Edit while it runs). A button going down, going up, a
-  double click and a move become `MouseDown`, `MouseUp`, `DblClick` and
-  `MouseMove` of the window under the pointer (the one drawn last there),
-  with VB's button (1 left, 2 right, 4 middle) and shift (1, 2, 4) and
-  the middle of the cell in twips from the window's origin (a form's
-  client area); a release goes to the window the button went down on,
-  and a move is reported once a cell. A left button released over the
-  window it went down on clicks it (`Click`, which also gives it the
-  focus), except a double click. A list selects the item clicked (its
-  scroll bar's arrows the item before or after); a combo box opens or
-  closes its list, and an item of the open list is selected; a scroll bar
-  moves by `SmallChange` on its arrows and by `LargeChange` on its track;
-  a text box puts its caret at the character clicked. On the menus, a
-  title opens its menu and an item is chosen; on a dialog, a button
-  released over it is chosen. In a file of keys, a mouse record is the
-  bytes 0, 255, then the kind (`D` down, `U` up, `M` move, `2` double
-  click), the buttons, the row and the column.
+  turns off Quick Edit while it runs; the console's mode comes back when it
+  ends). Mouse events keep their order with the keys (each holds a place in
+  the key buffer as the key 0, 255; moves in a row become one). A button
+  going down, going up, a double click and a move become `MouseDown`,
+  `MouseUp`, `DblClick` and `MouseMove` of the window under the pointer (the
+  one drawn last there), with VB's button (1 left, 2 right, 4 middle) and
+  shift (1, 2, 4) and the middle of the cell in twips from the window's
+  origin (a form's client area); a release goes to the window the button
+  went down on, and a move is reported once a cell. A left button released
+  over the window it went down on clicks it (`Click`, which also gives it
+  the focus), except a double click. A list selects the item clicked (its
+  scroll bar's arrows the item before or after); a combo box opens or closes
+  its list, and an item of the open list is selected; a scroll bar moves by
+  `SmallChange` on its arrows and by `LargeChange` on its track; a text box
+  puts its caret at the character clicked. On the menus, a title opens its
+  menu and an item is chosen; on a dialog, a button released over it is
+  chosen. In a file of keys, a mouse record is the bytes 0, 255, then the
+  kind (`D` down, `U` up, `M` move, `2` double click), the buttons, the row
+  and the column.
 - **Building.** `wfc build` of a project with `WfcTextUI=1` writes a
   console program (not a Windows one), which shows its forms on the text
   screen as `wfc` does.

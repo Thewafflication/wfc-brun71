@@ -82,7 +82,11 @@ of Win32 windows; the program stays single-threaded and event-driven (events,
       screen.
 - [ ] Modal forms, several forms at once and `DoEvents` checked in the
       corpus.
-- [ ] Tried by hand in a live console (keys, mouse, Quick Edit).
+- [x] Checked in a live console window (conhost) with input written by a
+      test driver: drawing and colours, keys, the mouse, real-time timers,
+      Quick Edit off while running and the console restored after; a fast
+      run found mouse events overtaking keys, now kept in order. Windows
+      Terminal with a real mouse is not checked.
 
 ## Later
 
